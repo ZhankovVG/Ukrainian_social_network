@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'profiles',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'Ukrainian_social_network.urls'
@@ -132,7 +137,25 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+AUTHENTICATION_CLASSES = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SITE_ID = 1

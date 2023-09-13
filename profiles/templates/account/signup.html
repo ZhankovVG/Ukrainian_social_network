@@ -1,0 +1,45 @@
+{% extends "account/base.html" %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <span style="margin-left: 10px;">Реєстрація</span>
+        </div>
+        <div class="card-body">
+          <form method="post" class="signup" id="signup_form" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+
+            <label for="id_username">Имя пользователя:</label>
+            <input type="text" name="username" id="id_username" value="" required>
+
+            <label for="id_last_name">Фамилия:</label>
+            <input type="text" name="last_name" id="id_last_name" required>
+
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" required>
+
+            <label for="id_password1">Пароль:</label>
+            <input type="password" name="password1" id="id_password1" required>
+
+            <label for="id_password2">Повторите пароль:</label>
+            <input type="password" name="password2" id="id_password2" required>
+
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Зареєструватися</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        Вже маєте акаунт? Тоді <a href="{% url 'account_login' %}">увійдіть</a>.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
