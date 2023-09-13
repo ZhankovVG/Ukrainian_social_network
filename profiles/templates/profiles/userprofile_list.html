@@ -21,12 +21,34 @@
                 <li><a href="#">Профиль</a></li>
                 <li><a href="#">Друзья</a></li>
                 <li><a href="#">Настройки</a></li>
-                <li><a href="#">Выйти</a></li>
+                <li><a href="{% url 'account_logout' %}">Выйти</a></li>
             </ul>
         </nav>
     </header>
 
-  
+    <main>
+        {% if user.is_authenticated %}
+        <h2 class="user-name">{{ user.username }}</h2>
+        {% else %}
+
+        <div class="user-avatar">
+            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+        </div>
+
+        <div class="login-form">
+            <form method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <label for="id_username">Логин:</label>
+                <input type="text" name="username" id="id_username">
+                <label for="id_password">Пароль:</label>
+                <input type="password" name="password" id="id_password">
+                
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+
+        {% endif %}
+    </main>
 
     <footer>
         <p>&copy; 2023 Ваша социальная сеть</p>
