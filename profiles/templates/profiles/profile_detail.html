@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'profiles/css/profile_page/layout.css' %}">
+    <title>iN UA</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div class="header-ua">
+                    <h2>
+                        iN UA
+                    </h2>
+                </div>
+                <li><a href="">Головна</a></li>
+                <li><a href="#">Новини</a></li>
+                <li><a href="#">Профіль</a></li>
+                <li><a href="#">Друзі</a></li>
+                <li><a href="#">Налаштування</a></li>
+
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'account_logout' %}">Выйти</a></li>
+                {% else %}
+                <li><a href="{% url 'account_login' %}" class="logout-link">Вхід</a></li>
+                <li><a href="{% url 'account_signup' %}" class="registration-link">Реєстрація</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% if user.is_authenticated %}
+        <h2 class="user-name">{{ user.username }} {{ user.last_name }}</h2>
+
+        {% if user_profile.avatar %}
+        <img class="user-avatar" src="{{ user_profile.avatar.url }}" alt="avatar-user">
+        {% else %}
+        <img class="user-avatar" src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+        {% endif %}
+        {% else %}
+        <div class="user-avatar">
+            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+        </div>
+
+
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 iN UA соціальна мережа</p>
+    </footer>
+</body>
+
+</html>
