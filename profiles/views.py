@@ -1,6 +1,39 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, View
 from .models import UserProfile
+from django.contrib import messages
+from .forms import UserUpdateForm, ProfileUpdateForm
+
+
+class ProfileView(View):
+    # User profile
+    def get(self, request):
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.userprofile)
+    
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+
+        return render(request, 'users/profile.html', context)
+
+    def post(self, request):
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Ваша учетная запись обновлена!")
+            return redirect('profile')
+
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+
+        return render(request, 'users/profile.html', context)
 
 
 class PublicProfileView(View):
