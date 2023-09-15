@@ -1,23 +1,29 @@
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView, View
 from .models import UserProfile
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
 
-# class UserProfileView(ListView):
-#     model = UserProfile
+class PublicProfileView(View):
+    # Creating a public profile view
+    def get(self, request, username):
+        user = UserProfile.objects.get(username=username)
+        return render(request, 'profiles/public_profile.html', {"context": user})
 
-@method_decorator(login_required, name='dispatch')
-class UserProfileDetailView(DetailView):
+
+class UserProfileView(ListView):
+    # All user profiles
     model = UserProfile
-    template_name = 'profiles/profile_detail.html'
+    template_name = "profiles/all_profiles.html"
+    context_object_name = "profiles"
+    
+    def get_queryset(self):
+        return UserProfile.objects.all().exclude(user=self.request.user)
+    
 
+class UserProfileDetailView(DetailView):
+    # User profile details view
+    model = UserProfile
+    template_name = 'profiles/userprofile_dateil.html'
 
-class UserProfileView(TemplateView):
-    template_name = 'home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user_profile'] = self.request.user.userprofile
-        return context
+    def get_queryset(self):
+        return UserProfile.objects.all().exclude(user=self.request.user)
