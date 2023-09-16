@@ -32,7 +32,7 @@ class ProfileView(View):
             u_form.save()
             p_form.save()
             messages.success(request, f"Ваша учетная запись обновлена!")
-            return redirect('profile')
+            return redirect('profiles/profile.html')
 
         context = {
             'u_form': u_form,
