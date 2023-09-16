@@ -1,0 +1,38 @@
+.welcome h2 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333; 
+}
+
+.welcome img {
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-welcome {
+    margin-left: 30px;
+}
+
+.btn-welcome button a {
+    color: azure;
+    text-decoration: none;
+}
+
+.btn-welcome button:hover a {
+    color: black;
+    cursor: pointer;
+}
+
+.btn-welcome button {
+    background-color: #4169E1;
+    border-radius: 5px;
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-welcome button:hover {
+    background-color: #f3f027;
+    cursor: pointer;
+}

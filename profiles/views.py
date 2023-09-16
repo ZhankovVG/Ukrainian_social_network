@@ -5,6 +5,12 @@ from django.contrib import messages
 from .forms import UserUpdateForm, ProfileUpdateForm
 
 
+class WelkomePage(ListView):
+    # Start page
+    model = UserProfile
+    template_name = 'profiles/welcome_page.html'
+
+
 class ProfileView(View):
     # User profile
     def get(self, request):
@@ -16,7 +22,7 @@ class ProfileView(View):
             'p_form': p_form
         }
 
-        return render(request, 'users/profile.html', context)
+        return render(request, 'profiles/profile.html', context)
 
     def post(self, request):
         u_form = UserUpdateForm(request.POST, instance=request.user)
@@ -33,7 +39,7 @@ class ProfileView(View):
             'p_form': p_form
         }
 
-        return render(request, 'users/profile.html', context)
+        return render(request, 'profiles/profile.html', context)
 
 
 class PublicProfileView(View):
