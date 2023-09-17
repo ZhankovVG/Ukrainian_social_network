@@ -1,14 +1,15 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, HttpResponse
 from django.views.generic import ListView, DetailView, View
 from .models import UserProfile
 from django.contrib import messages
 from .forms import UserUpdateForm, ProfileUpdateForm
+from django.template.loader import render_to_string
 
 
-class WelkomePage(ListView):
+def welkomePage(requiest):
     # Start page
-    model = UserProfile
-    template_name = 'profiles/welcome_page.html'
+    start_page = render_to_string('profiles/welcome_page.html')
+    return HttpResponse(start_page)
 
 
 class ProfileView(View):
