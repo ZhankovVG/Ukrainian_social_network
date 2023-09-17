@@ -3,8 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.welkomePage, name='home'),
-    path('all/', views.UserProfileView.as_view(), name='profile-list-view'),
-    path('<int:pk>/', views.UserProfileDetailView.as_view(), name='profile-detail-view'),
-    path('public-profile/<str:username>/', views.PublicProfileView.as_view(), name='public-profile'),
+    path('', views.WelcomePageView.as_view(), name='welcome_page'),
+    path('profiles/<int:pk>/', views.UserProfilelView.as_view(), name='profile_detail_view'),
+    path('public_profile/<int:pk>/', views.PublicProfileView.as_view(), name='public_profile'),   
 ]
