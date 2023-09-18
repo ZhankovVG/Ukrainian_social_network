@@ -1,0 +1,12 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+<h1>Список друзей пользователя</h1>
+<ul class="user-profile-list">
+    {% for profile in object_list %}
+    <li class="user-profile-item">
+        <h2>{{ profile.user.username }}</h2>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
