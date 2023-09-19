@@ -1,0 +1,18 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<main>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ u_form.as_p }}
+        
+        {{ p_form.as_p }}
+    
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+{% endblock %}

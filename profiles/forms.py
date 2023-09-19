@@ -29,4 +29,7 @@ class ProfileUpdateForm(forms.ModelForm):
     image = forms.ImageField(label=('Image'), error_messages = {'invalid':("Image files only")}, widget=forms.FileInput, required=False)
     class Meta:
         model = UserProfile
-        fields = ['bio', 'birthday', 'image']
+        fields = ['bio', 'birthday', 'education', 'country', 'city', 'gender', 'birthday', 'avatar', 'phone']
+        widgets = {
+            'user': forms.HiddenInput(),  # Скрываем поле user в форме
+        }

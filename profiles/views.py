@@ -2,6 +2,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from .models import UserProfile
 from django.contrib.auth.models import User
+from .forms import UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 class WelcomePageView(View):
@@ -20,7 +23,7 @@ class ProfileListAllView(ListView):
 
 
 class ProfileDetailView(DetailView):
-    # Creating a public profile view
+    # User profile details view
     model = UserProfile
     template_name = 'profiles/profile_details.html'
     context_object_name = 'user'
@@ -31,10 +34,47 @@ class ProfileDetailView(DetailView):
     def get_object(self, **kwargs):
         pk = self.kwargs.get("pk")
         return get_object_or_404(UserProfile, pk=pk)
-    
+
 
 class PublicProfileView(View):
     # Creating a public profile view
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
-        return render(request, 'profiles/public_profile.html', {"context" : user})
+        return render(request, 'profiles/public_profile.html', {"context": user})
+
+
+def edit_profile(request):
+    try:
+        user_profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        user_profile = None
+
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=user_profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            if user_profile:
+                p_form.save()
+            else:
+                profile_data = {'user': request.user}
+                p_form = ProfileUpdateForm(request.POST, request.FILES, initial=profile_data)
+                if p_form.is_valid():
+                    p_form.save()
+            messages.success(request, "Профіль успішно оновлено!")
+        else:
+            messages.error(request, "Профіль не оновлено. Введіть правильні дані!")
+        return redirect('userprofile:edit_profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        if user_profile:
+            p_form = ProfileUpdateForm(instance=user_profile)
+        else:
+            profile_data = {'user': request.user}
+            p_form = ProfileUpdateForm(initial=profile_data)
+
+    args = {'u_form': u_form, 'p_form': p_form}
+    return render(request, 'profiles/edit_profile.html', args)
+
