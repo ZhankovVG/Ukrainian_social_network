@@ -41,12 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'profiles',
+    
     'crispy_forms',
     'crispy_bootstrap4',
-
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'Ukrainian_social_network.urls'
@@ -139,14 +135,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 
-AUTHENTICATION_CLASSES = (
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
