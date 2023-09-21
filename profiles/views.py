@@ -66,7 +66,7 @@ def edit_profile(request):
             messages.success(request, "Профіль успішно оновлено!")
         else:
             messages.error(request, "Профіль не оновлено. Введіть правильні дані!")
-        return redirect('userprofile:edit_profile')
+        return redirect('profiles:edit_profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
         if user_profile:
