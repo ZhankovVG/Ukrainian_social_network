@@ -1,4 +1,4 @@
-{% extends "account/base.html" %}
+{% extends "accounts/base.html" %}
 
 
 {% block content %}
@@ -10,7 +10,7 @@
           <span style="margin-left: 10px;">Реєстрація</span>
         </div>
         <div class="card-body">
-          <form method="post" class="signup" id="signup_form" action="{% url 'account_signup' %}">
+          <form method="post" class="signup" id="signup_form" action="{% url 'accounts:signup' %}">
             {% csrf_token %}
 
             <label for="id_username">Имя пользователя:</label>
@@ -37,7 +37,7 @@
       </div>
 
       <div class="text-center mt-3">
-        Вже маєте акаунт? Тоді <a href="{% url 'account_login' %}">увійдіть</a>.
+        Вже маєте акаунт? Тоді <a href="">увійдіть</a>.
       </div>
     </div>
   </div>

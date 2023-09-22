@@ -1,4 +1,4 @@
-{% extends "account/base.html" %}
+{% extends "accounts/base.html" %}
 
 {% block title %}Вхід{% endblock %}
 
@@ -10,7 +10,7 @@
         <div class="card-header">
           <span style="margin-left: 10px;">Вхід</span>
         </div>
-          <form class="signup" method="POST" id="signup_form" action="{% url 'account_login' %}">
+          <form class="signup" method="POST" id="signup_form" action="{% url 'accounts:login' %}">
 
             {% csrf_token %}
             <div class="well">
@@ -20,14 +20,14 @@
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Забули пароль?</a>
+            <a class="button secondaryAction" href="">Забули пароль?</a>
             <button type="submit" class="btn btn-primary">Увійти</button>
             
           </form>
         </div>
         <div class="text-center mt-3">
           Не маєте облікового запису? 
-          <a href="{% url 'account_signup' %}">Зареєструватися</a>.
+          <a href="">Зареєструватися</a>.
         </div>
       </div>
     </div>
