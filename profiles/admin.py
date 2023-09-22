@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import UserProfile, Status
+from .models import Profile, Status
 
 
-admin.site.register(UserProfile)
+admin.site.register(Profile)
 
 
 admin.site.register(Status)
