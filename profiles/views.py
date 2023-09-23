@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, UpdateView
 from .models import Profile
-from django.contrib.auth.models import User
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 
 class WelcomePageView(View):
@@ -39,42 +39,25 @@ class ProfileDetailView(DetailView):
 class PublicProfileView(View):
     # Creating a public profile view
     def get(self, request, username):
-        user = get_object_or_404(User, username=username)
+        user = get_object_or_404(Profile, username=username)
         return render(request, 'profiles/public_profile.html', {"context": user})
 
 
-def edit_profile(request):
-    try:
-        user_profile = request.user.userprofile
-    except Profile.DoesNotExist:
-        user_profile = None
-
+@login_required
+def ProfileEditView(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=user_profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            if user_profile:
-                p_form.save()
-            else:
-                profile_data = {'user': request.user}
-                p_form = ProfileUpdateForm(request.POST, request.FILES, initial=profile_data)
-                if p_form.is_valid():
-                    p_form.save()
-            messages.success(request, "Профіль успішно оновлено!")
-        else:
-            messages.error(request, "Профіль не оновлено. Введіть правильні дані!")
-        return redirect('profiles:edit_profile')
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect(reverse_lazy('profiles:edit-profile'))
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        if user_profile:
-            p_form = ProfileUpdateForm(instance=user_profile)
-        else:
-            profile_data = {'user': request.user}
-            p_form = ProfileUpdateForm(initial=profile_data)
-
-    args = {'u_form': u_form, 'p_form': p_form}
-    return render(request, 'profiles/edit_profile.html', args)
-
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    return render(request, 'profiles/edit-my-profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Profile(AbstractUser):
+class Profile(models.Model):
     # User model
     GENDER = (
         ('male', 'мужчина'),
@@ -17,6 +17,12 @@ class Profile(AbstractUser):
     city = models.CharField(max_length=20, blank=True)
     country = models.CharField(max_length=20, blank=True)
     education = models.CharField(max_length=50, default='', null=True, blank=True)
+    user = models.OneToOneField(AbstractUser, on_delete=models.SET_NULL, null=True, related_name='profile')
+    
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', ]
+    
     
 
 class Status(models.Model):

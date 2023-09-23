@@ -27,10 +27,10 @@
                 <li><a href="#">Друзі</a></li>
                 <li><a href="{% url 'edit_profile'  %}">Налаштування</a></li>
 
-                <li><a href="">Выйти</a></li>
+                <li><a href="{% url 'account_logout' %}">Выйти</a></li>
                 {% else %}
-                <li><a href="" class="logout-link">Вхід</a></li>
-                <li><a href="" class="registration-link">Реєстрація</a></li>
+                <li><a href="{% url 'account_login' %}" class="logout-link">Вхід</a></li>
+                <li><a href="{% url 'account_signup' %}" class="registration-link">Реєстрація</a></li>
                 {% endif %}
             </ul>
         </nav>
