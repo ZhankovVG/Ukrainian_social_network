@@ -6,12 +6,9 @@
 {% block content %}
 <main>
     {% if user.is_authenticated %}
-    <h2 class="user-name">{{ user.username }} {{ user.last_name }}</h2>
-    {% if user_profile.avatar %}
-    <img class="user-avatar" src="{{ user_profile.avatar.url }}" alt="avatar-user">
-    {% else %}
-    <img class="user-avatar" src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
-    {% endif %}
+    <img class="user-avatar" src="" alt="avatar-user">
+    
+    <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
     {% else %}
     <div class="user-avatar">
         <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">

@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Profile(models.Model):
-    # User model
+class Profile(AbstractUser):
+    # User model fields
     GENDER = (
         ('male', 'мужчина'),
         ('female', 'женщина'),
@@ -17,13 +17,14 @@ class Profile(models.Model):
     city = models.CharField(max_length=20, blank=True)
     country = models.CharField(max_length=20, blank=True)
     education = models.CharField(max_length=50, default='', null=True, blank=True)
-    user = models.OneToOneField(AbstractUser, on_delete=models.SET_NULL, null=True, related_name='profile')
+    email = models.EmailField(unique=True)
+
+   
     
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', ]
-    
-    
+    def __str__(self):
+        return self.username
+
 
 class Status(models.Model):
     # Status
@@ -33,5 +34,5 @@ class Status(models.Model):
         return self.text
     
     class Meta:
-        verbose_name = 'Статус'
+        verbose_name = 'Статус' 
         verbose_name_plural = 'Статусы'

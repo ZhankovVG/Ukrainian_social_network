@@ -1,10 +1,8 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View, UpdateView
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.urls import reverse_lazy
 
 
 class WelcomePageView(View):
@@ -45,19 +43,15 @@ class PublicProfileView(View):
 
 @login_required
 def ProfileEditView(request):
+    user = request.user
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile has been updated!')
-            return redirect(reverse_lazy('profiles:edit-profile'))
+            return redirect('welcome_page')
     else:
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.profile)
-    
-    return render(request, 'profiles/edit-my-profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+        profile_form = ProfileUpdateForm(instance=user)
+    return render(request, 'profiles/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
