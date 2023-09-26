@@ -5,14 +5,31 @@
 
 {% block content %}
 <main>
-    {% if user.is_authenticated %}
-    <img class="user-avatar" src="" alt="avatar-user">
-    
-    <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
-    {% else %}
-    <div class="user-avatar">
-        <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
-    </div>
-    {% endif %}
+    <div>
+        {% if user.is_authenticated %}
+
+        <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+        <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
+
+        {% else %}
+
+        <div class="user-avatar">
+            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+        </div>
+
+        {% endif %}
+        <div class="information_user">
+            <p>Місце проживання<b> {{ user.country }}, {{ user.city }}</b></p>
+            <p>Номер телефону <b>{{ user.phone }}</b></p>
+            <p>День народження <b>{{ user.birthday }}</b></p>
+            <p>Освіта <b>{{ user.education }}</b></p>
+            <p>Стать людини <b>{{ user.gender }}</b></p>
+            <p>Біографія <b>{{ user.bio }}</b></p>
+        </div>
+    </div><br>
+
+    <hr>
+
 </main>
+
 {% endblock %}
