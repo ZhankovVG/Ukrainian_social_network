@@ -1,4 +1,10 @@
-.information_user {
+.left_side_bord p img {
+    width: 10px;
+}
+
+
+.right_side_bord {
+    width: 70%;
     word-spacing: 3px;
     float: right;
     margin-left: 20px;

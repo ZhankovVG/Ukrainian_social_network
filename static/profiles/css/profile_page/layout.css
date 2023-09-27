@@ -1,7 +1,8 @@
 body {
-    margin-top: 20px;
-    margin-left: 150px;
-    margin-right: 150px;
+    position: absolute;
+    top: 20px;
+    left: 12.5%; /* 12.5% для центрирования элемента */
+    width: 75%;
     border: 1px solid #4169E1;
     border-radius: 5px;
 }
