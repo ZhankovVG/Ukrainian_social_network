@@ -5,12 +5,13 @@
 
 {% block content %}
 <main>
-    <div>
+    <div class="left_side_bord">
         {% if user.is_authenticated %}
 
         <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+        <p style="float: right; margin-top: -50px;"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"></i> Online</p>
+        
         <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
-
         {% else %}
 
         <div class="user-avatar">
@@ -18,7 +19,7 @@
         </div>
 
         {% endif %}
-        <div class="information_user">
+        <div class="right_side_bord">
             <p>Місце проживання<b> {{ user.country }}, {{ user.city }}</b></p>
             <p>Номер телефону <b>{{ user.phone }}</b></p>
             <p>День народження <b>{{ user.birthday }}</b></p>
