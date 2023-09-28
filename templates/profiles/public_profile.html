@@ -9,14 +9,16 @@
         {% if user.is_authenticated %}
 
         <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
-        <p style="float: right; margin-top: -50px;"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"></i> Online</p>
-        
+        <p style="float: right; margin-top: -50px;"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"></i>
+            Online</p>
+
+        {% if user.avatar %}
         <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
         {% else %}
-
         <div class="user-avatar">
             <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
         </div>
+        {% endif %}
 
         {% endif %}
         <div class="right_side_bord">
