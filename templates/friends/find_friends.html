@@ -1,0 +1,22 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+
+{% block content %}
+<h1>Результаты поиска друзей</h1>
+
+<p>Вы искали: "{{ request.GET.search }}"</p>
+
+<ul>
+    {% for user in users %}
+    <li>
+        <p>Имя пользователя: {{ user.username }}</p>
+        <p>Имя: {{ user.first_name }}</p>
+        <p>Фамилия: {{ user.last_name }}</p>
+    </li>
+
+    {% empty %}
+    <li>По вашему запросу ничего не найдено.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
