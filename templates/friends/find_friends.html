@@ -1,22 +1,29 @@
 {% extends "profiles/layout.html" %}
 {% load static %}
 
-
 {% block content %}
-<h1>Результаты поиска друзей</h1>
 
-<p>Вы искали: "{{ request.GET.search }}"</p>
+<div class="page_search">
+    <h2>Результаты поиска друзей</h2>
+    
+    <h5>Вы искали: "{{ request.GET.search }}"</h5>
+    <ul class="user-list">
+        {% for user in users %}
+        <li class="user-item">
+            <img src="{{ user.avatar.url }}" alt="avatar_user">
+            <div class="user-info">
+                <a href="{% url 'public_profile' user.username %}">
+                    <p class="user_name_search">Имя: {{ user.first_name }}</p>
+                </a>
+                <p class="user-last-name">Фамилия: {{ user.last_name }}</p>
+                <button>Додати в друзі</button>
+            </div>
+        </li>
+        {% empty %}
+        <li>По вашему запросу ничего не найдено.</li>
+        {% endfor %}
+    </ul>
+</div>
 
-<ul>
-    {% for user in users %}
-    <li>
-        <p>Имя пользователя: {{ user.username }}</p>
-        <p>Имя: {{ user.first_name }}</p>
-        <p>Фамилия: {{ user.last_name }}</p>
-    </li>
 
-    {% empty %}
-    <li>По вашему запросу ничего не найдено.</li>
-    {% endfor %}
-</ul>
 {% endblock %}

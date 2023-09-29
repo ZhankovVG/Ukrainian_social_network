@@ -2,11 +2,64 @@
     width: 10px;
 }
 
-
 .right_side_bord {
     width: 70%;
     word-spacing: 3px;
     float: right;
     margin-left: 20px;
 }
+
+/* user auntification start */
+
+.user-avatar {
+    width: 130px;
+    height: 200px;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: auto;
+}
+
+.user-name {
+    margin: 0;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+.login-form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 150px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form button {
+    display: block;
+    width: 110px;
+    padding: 10px;
+    background-color: #4169E1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #2456b3;
+}
+
+/* user auntification end */
 

@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, View, UpdateView
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class WelcomePageView(View):
@@ -36,6 +37,7 @@ class ProfileDetailView(DetailView):
 
 class PublicProfileView(View):
     # Creating a public profile view
+    @method_decorator(login_required)
     def get(self, request, username):
         user = get_object_or_404(Profile, username=username)
         return render(request, 'profiles/public_profile.html', {"context": user})
