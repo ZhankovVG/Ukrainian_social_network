@@ -1,0 +1,40 @@
+.page_search h2, 
+.page_search h5 {
+    margin-left: 10px;
+}
+
+.user-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.user-item a {
+    text-decoration: none;
+}
+
+.user-list img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user-info {
+    flex: 1;
+    margin-top: -15px;
+}
+
+.user_name_search {
+    margin-bottom: -20px;
+    color: black;
+    padding-bottom: 5px;
+}
+

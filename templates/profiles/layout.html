@@ -5,11 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'profiles/css/profile_page/layout.css' %}">
-    <link rel="stylesheet" href="{% static 'profiles/css/profile_page/welcome_page.css' %}">
-    <link rel="stylesheet" href="{% static 'profiles/css/profile_page/profile_page.css' %}">
-    <link rel="shortcut icon" href="{% static 'profiles/img/ukr (2).png' %}">
     <title>iN UA</title>
+
+    {% include 'includes/links.html' %}
 </head>
 
 <body>
@@ -22,13 +20,13 @@
                     </h2>
                 </div>
                 <li><a href="{% url 'welcome_page' %}">Головна</a></li>
-                <li><a href="#">Новини</a></li>
+            
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'public_profile' username=user.username %}">Профіль</a></li>
                 <li><a href="#">Друзі</a></li>
 
                 <form action="{% url 'friends:search' %}" method="GET">
-                    <input type="search" name="search" placeholder="Пошук">
+                    <input type="search" name="search" placeholder="Пошук" style="width: 60px; height: 20px;">
                     <button type="submit">Знайти</button>
                 </form>
 

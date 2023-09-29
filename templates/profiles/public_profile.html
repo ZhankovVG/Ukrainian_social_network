@@ -14,6 +14,9 @@
 
         {% if user.avatar %}
         <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
+
+        
+
         {% else %}
         <div class="user-avatar">
             <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
