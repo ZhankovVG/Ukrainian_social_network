@@ -39,3 +39,11 @@ class SendFriendRequestView(View):
             return redirect('find_friends')
         else:
             return redirect('find_friends')
+        
+        
+@login_required
+class FriendRequestListView(ListView):
+    # Get all friend requests current user got
+    model = Friend
+    context_object_name = 'friend_requests'
+    template_name = 'friends/friend_requests.html'

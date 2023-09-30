@@ -25,8 +25,8 @@
                 <li><a href="{% url 'public_profile' username=user.username %}">Профіль</a></li>
                 <li><a href="#">Друзі</a></li>
 
-                <form action="{% url 'friends:search' %}" method="GET">
-                    <input type="search" name="search" placeholder="Пошук" style="width: 60px; height: 20px;">
+                <form action="{% url 'friends:search' %}" method="GET" class="search-form">
+                    <input type="search" name="search" placeholder="Пошук" class="search-button" style="width: 60px; height: 20px;">
                     <button type="submit">Знайти</button>
                 </form>
 

@@ -14,6 +14,9 @@
 .user-avatar {
     width: 130px;
     height: 200px;
+    box-shadow: 16px 14px 20px #0000008c;
+    border-radius: 10px;
+    position: relative;
 }
 
 .user-avatar img {
@@ -62,4 +65,3 @@
 }
 
 /* user auntification end */
-
