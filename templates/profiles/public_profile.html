@@ -5,26 +5,39 @@
 
 {% block content %}
 <main>
-    <div class="left_side_bord">
+    <!-- Left side of the page -->
+    <div class="left-side">
         {% if user.is_authenticated %}
+        <div class="user-info">
+            <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
 
-        <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
-        <p style="float: right; margin-top: -50px;"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"></i>
-            Online</p>
-
-        {% if user.avatar %}
-        <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
-
-        
-
-        {% else %}
-        <div class="user-avatar">
-            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+            {% if user.avatar %}
+            <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
+            {% else %}
+            <div class="user-avatar">
+                <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
+        <!-- <button>завантажити фото</button> -->
+
+        <div class="user-friends">
+            <h3>Друзі:</h3>
+            <ul>
+                {% for friend in user.friends.all %}
+                <li>{{ friend.first_name }} {{ friend.last_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
         {% endif %}
-        <div class="right_side_bord">
+    </div>
+
+    <!-- Right side of the page -->
+    <p class="online-status"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"> Online</p>
+
+    <div class="right-side">
+        <div class="user-details">
             <p>Місце проживання<b> {{ user.country }}, {{ user.city }}</b></p>
             <p>Номер телефону <b>{{ user.phone }}</b></p>
             <p>День народження <b>{{ user.birthday }}</b></p>
@@ -32,10 +45,6 @@
             <p>Стать людини <b>{{ user.gender }}</b></p>
             <p>Біографія <b>{{ user.bio }}</b></p>
         </div>
-    </div><br>
-
-    <hr>
-
+    </div>
 </main>
-
 {% endblock %}
