@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Friend
+from .models import Friend, FriendshipRequest
 from django.contrib.auth.decorators import login_required
 from profiles.models import Profile
 from django.views.generic import View, ListView
 from django.db.models import Q
-
+from django.http import JsonResponse
+from .forms import FriendshipRequestForm
 
 
 class FindFriendsView(ListView):
@@ -22,28 +23,19 @@ class FindFriendsView(ListView):
             users = Profile.objects.exclude(username=request.user.username)
 
         return render(request, self.template_name, {'users': users})
-    
-
-@login_required
+     
+        
 class SendFriendRequestView(View):
-    # Adding friends
-    def post(self, request, user_id):
-        user_to_add = Profile.objects.get(id=user_id)
-
-        friend_request, created = Friend.objects.get_or_create(
-            from_user=request.user,
-            to_user=user_to_add.user,
-        )
-
-        if created:
-            return redirect('find_friends')
+    # Friend request
+    def post(self, request):
+        form = FriendshipRequestForm(request.POST)
+        if form.is_valid():
+            user_to_add_id = form.cleaned_data['user_to_add_id']
+            user_to_add = Profile.objects.get(pk=user_to_add_id)
+            FriendshipRequest.objects.create(
+                from_user=request.user,
+                to_user=user_to_add,
+            )
+            return JsonResponse({'success': True})
         else:
-            return redirect('find_friends')
-        
-        
-@login_required
-class FriendRequestListView(ListView):
-    # Get all friend requests current user got
-    model = Friend
-    context_object_name = 'friend_requests'
-    template_name = 'friends/friend_requests.html'
+            return JsonResponse({'success': False})

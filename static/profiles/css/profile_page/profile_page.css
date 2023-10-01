@@ -1,5 +1,9 @@
-.left_side_bord p img {
-    width: 10px;
+/* Styles for the left side of the page */
+.left-side {
+    float: left;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .right_side_bord {
@@ -8,8 +12,6 @@
     float: right;
     margin-left: 20px;
 }
-
-/* user auntification start */
 
 .user-avatar {
     width: 130px;
@@ -30,38 +32,49 @@
     padding-bottom: 10px;
 }
 
-.login-form {
-    max-width: 300px;
+/* friend style start  */
+
+.user-friends {
+    width: 200px;
+    margin-top: 10px;
+    border: 1px solid #ccc; 
+    padding: 5px; 
+    max-height: 200px; 
+    overflow-y: auto;
 }
 
-.login-form label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
+.user-friends ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"] {
-    width: 150px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.user-friends li {
+    margin: 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
 }
 
-.login-form button {
-    display: block;
-    width: 110px;
-    padding: 10px;
-    background-color: #4169E1;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.user-friends h3 {
+    margin-top: 0;
 }
 
-.login-form button:hover {
-    background-color: #2456b3;
+/* friend style end  */
+
+
+/* Styles for the right side of the page */
+.right-side {
+    float: left;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-/* user auntification end */
+.online-status img {
+    width: 10px;
+}
+
+.online-status {
+    float: right;
+    height: 10px;
+}
+

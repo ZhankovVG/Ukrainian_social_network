@@ -1,12 +1,14 @@
 body {
     position: absolute;
     top: 20px;
-    left: 12.5%; /* 12.5% для центрирования элемента */
+    left: 12.5%;
     width: 75%;
     border: 1px solid #4169E1;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    /* min-height: 100vh;  */
 }
-
 
 
 /* header start */
@@ -43,6 +45,7 @@ nav ul li a {
 }
 
 main {
+    flex-grow: 1;
     max-width: 800px;
     padding: 20px;
     background-color: #fff;
@@ -50,7 +53,6 @@ main {
 }
 
 /* header end */
-
 
 
 footer {
