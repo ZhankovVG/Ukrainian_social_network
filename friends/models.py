@@ -3,6 +3,7 @@ from profiles.models import Profile
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+
 class Friend(models.Model):
     to_user = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='friends')
@@ -25,13 +26,13 @@ class Friend(models.Model):
         super().save(*args, **kwargs)
 
     def add_friend(self, account):
-        if account not in self.to_user.friends.all():
-            self.to_user.friends.add(account)
+        if account not in self.to_user.all():
+            self.to_user.add(account)
             self.save()
 
     def remove_friend(self, account):
-        if account in self.to_user.friends.all():
-            self.to_user.friends.remove(account)
+        if account in self.to_user.all():
+            self.to_user.remove(account)
             self.save()
 
     def unfriend(self, remove):
@@ -41,6 +42,7 @@ class Friend(models.Model):
 
     def is_mutual_friend(self, friend):
         return friend in self.to_user.friends.all()
+
 
 class FriendshipRequest(models.Model):
     from_user = models.ForeignKey(

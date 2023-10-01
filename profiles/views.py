@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import View
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
@@ -12,29 +12,6 @@ class WelcomePageView(View):
         return render(request, 'profiles/welcome_page.html')
 
 
-class ProfileListAllView(ListView):
-    # All user profiles
-    model = Profile
-    template_name = 'profiles/userprofile_list.html'
-
-    def get_queryset(self):
-        return Profile.objects.all().exclude(user=self.request.user)
-
-
-class ProfileDetailView(DetailView):
-    # User profile details view
-    model = Profile
-    template_name = 'profiles/profile_details.html'
-    context_object_name = 'user'
-
-    def get_queryset(self):
-        return Profile.objects.all().exclude(user=self.request.user)
-
-    def get_object(self, **kwargs):
-        pk = self.kwargs.get("pk")
-        return get_object_or_404(Profile, pk=pk)
-
-
 class PublicProfileView(View):
     # Creating a public profile view
     @method_decorator(login_required)
@@ -45,6 +22,7 @@ class PublicProfileView(View):
 
 @login_required
 def ProfileEditView(request):
+    # Apdate data users
     user = request.user
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)

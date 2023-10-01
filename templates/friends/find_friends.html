@@ -5,7 +5,7 @@
 
 <div class="page_search">
     <h2>Результаты поиска друзей</h2>
-    
+
     <h5>Вы искали: "{{ request.GET.search }}"</h5>
     <ul class="user-list">
         {% for user in users %}
@@ -16,7 +16,13 @@
                     <p class="user_name_search">Имя: {{ user.first_name }}</p>
                 </a>
                 <p class="user-last-name">Фамилия: {{ user.last_name }}</p>
-                <button>Додати в друзі</button>
+
+                <form id="friendship-request-form" method="post" action="{% url 'friends:send_friend_request' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_to_add_id" value="{{ user_to_add.id }}">
+                    <button type="submit">Добавить в друзья</button>
+                </form>
+
             </div>
         </li>
         {% empty %}
@@ -24,6 +30,33 @@
         {% endfor %}
     </ul>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("friendship-request-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: this.method,
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Запрос на дружбу успешно отправлен.');
+                    } else {
+                        alert('Произошла ошибка при отправке запроса.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        });
+    });
+</script>
 
 
 {% endblock %}
