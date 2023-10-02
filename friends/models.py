@@ -4,6 +4,50 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 
+class FriendshipManager(models.Manager):
+    # Friendship manager
+
+    def friends(self, user):
+        # Return a list of all friends
+        qs = (
+            Friend.objects.select_related('from_user', 'to_user')
+                .filter(to_user=user)
+                .all()
+        )
+        friends = [u.from_user for u in qs]
+        return friends
+    
+    def requests(self, user):
+        # Return a list of friendship requests
+        qs = (
+            FriendshipRequest.objects.select_related('from_user', 'to_user')
+                .filter(to_user=user)
+                .all()
+        )
+        requests = list(qs)
+        return requests
+    
+    def send_requests(self, user):
+        # Return a list of friendship requests from user
+        qs = (
+            FriendshipRequest.objects.select_related('from_user', 'to_user')
+                .filter(to_user=user)
+                .all()
+        )
+        requests = list(qs)
+        return requests
+    
+    def got_friend_requests(self, user):
+        # Return a list of friendship requests user got
+        qs = (
+            FriendshipRequest.objects.select_related('from_user__profile', 'to_user')
+                .filter(to_user=user)
+                .all()
+        )
+        unread_requests = list(qs)
+        return unread_requests
+
+
 class Friend(models.Model):
     to_user = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='friends')
@@ -25,26 +69,9 @@ class Friend(models.Model):
                 'Користувачі не можуть дружити самі із собою.')
         super().save(*args, **kwargs)
 
-    def add_friend(self, account):
-        if account not in self.to_user.all():
-            self.to_user.add(account)
-            self.save()
-
-    def remove_friend(self, account):
-        if account in self.to_user.all():
-            self.to_user.remove(account)
-            self.save()
-
-    def unfriend(self, remove):
-        self.remove_friend(remove)
-        friend_list = Friend.objects.get(from_user=remove)
-        friend_list.remove_friend(self.from_user)
-
-    def is_mutual_friend(self, friend):
-        return friend in self.to_user.friends.all()
-
 
 class FriendshipRequest(models.Model):
+    # Model to represent friendship requests
     from_user = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
