@@ -1,46 +1,32 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from .models import Friend, FriendshipRequest
-from django.contrib.auth.decorators import login_required
 from profiles.models import Profile
 from django.views.generic import View, ListView
 from django.db.models import Q
-from django.http import JsonResponse
-from .forms import FriendshipRequestForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class FindFriendsView(ListView):
-    # Friend search
-    template_name = 'friends/find_friends.html'
+class FindFriendsListView(LoginRequiredMixin, ListView):
+    model = Friend
+    context_object_name = 'users'
+    template_name = "friends/find_friends.html"
 
-    def get(self, request):
-        search_query = self.request.GET.get('search')
-
-        if search_query:
-            users = Profile.objects.filter(
-            Q(username__icontains=search_query) | Q(first_name__icontains=search_query) | Q(last_name__icontains=search_query)
-            ).exclude(username=request.user.username)
-        else:
-            users = Profile.objects.exclude(username=request.user.username)
-
-        return render(request, self.template_name, {'users': users})
+    def get_queryset(self):
+        current_user_friends = self.request.user.friends.values('id')
+        sent_request = list(
+            FriendshipRequest.objects.filter(Q(from_user=self.request.user))
+            .exclude(to_user_id=self.request.user.id)
+            .values_list('to_user_id', flat=True))
+        users = Profile.objects.exclude(id__in=current_user_friends).exclude(id__in=sent_request).exclude(
+            id=self.request.user.id)
+        return users
      
         
-class SendFriendRequestView(View):
-    # Friend request
-    def post(self, request):
-        form = FriendshipRequestForm(request.POST)
-        if form.is_valid():
-            user_to_add_id = form.cleaned_data['user_to_add_id']
-            user_to_add = Profile.objects.get(pk=user_to_add_id)
-            FriendshipRequest.objects.create(
-                from_user=request.user,
-                to_user=user_to_add,
-            )
-            return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'success': False})
-        
+class FriendRequestsListView(LoginRequiredMixin, ListView):
+    # Get all friend requests current user got
+    model = Friend
+    context_object_name = 'friend_requests'
+    template_name = 'friends/friend_requests.html'
 
+    def get_queryset(self):
+        return Friend.objects.got_friend_requests(user=self.request.user)

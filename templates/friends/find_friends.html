@@ -17,7 +17,7 @@
                 </a>
                 <p class="user-last-name">Фамилия: {{ user.last_name }}</p>
 
-                <form id="friendship-request-form" method="post" action="{% url 'friends:send_friend_request' %}">
+                <form id="friendship-request-form" method="post" action="{% url 'friends:find_friends' %}">
                     {% csrf_token %}
                     <input type="hidden" name="user_to_add_id" value="{{ user_to_add.id }}">
                     <button type="submit">Добавить в друзья</button>
