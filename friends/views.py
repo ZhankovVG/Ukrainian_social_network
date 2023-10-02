@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from .models import Friend, FriendshipRequest
 from django.contrib.auth.decorators import login_required
@@ -6,6 +8,7 @@ from django.views.generic import View, ListView
 from django.db.models import Q
 from django.http import JsonResponse
 from .forms import FriendshipRequestForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class FindFriendsView(ListView):
@@ -39,3 +42,5 @@ class SendFriendRequestView(View):
             return JsonResponse({'success': True})
         else:
             return JsonResponse({'success': False})
+        
+

@@ -19,7 +19,6 @@ class Profile(AbstractUser):
     education = models.CharField(max_length=50, default='', null=True, blank=True)
     email = models.EmailField(unique=True)
 
-   
     def __str__(self):
         return self.username
 
