@@ -2,6 +2,7 @@ from django.db import models
 from profiles.models import Profile
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from friends.exceptions import AlreadyFriendsError, AlreadyExistsError
 
 
 class FriendshipManager(models.Manager):
@@ -46,6 +47,36 @@ class FriendshipManager(models.Manager):
         )
         unread_requests = list(qs)
         return unread_requests
+    
+    def add_friend(self, from_user, to_user, message=None):
+        """ Create a friendship request """
+        if from_user == to_user:
+            raise ValidationError("Користувачі не можуть дружити самі із собою")
+
+        if self.are_friends(from_user, to_user):
+            raise AlreadyFriendsError("Користувачі вже є друзями")
+
+        if FriendshipRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
+            raise AlreadyExistsError("Ви вже просили дружбу у цього користувача.")
+
+        if FriendshipRequest.objects.filter(from_user=to_user, to_user=from_user).exists():
+            raise AlreadyExistsError("Цей користувач вже просив у вас дружбу.")
+
+        if message is None:
+            message = ""
+
+        request, created = FriendshipRequest.objects.get_or_create(
+            from_user=from_user, to_user=to_user
+        )
+
+        if created is False:
+            raise AlreadyExistsError("Дружба вже запрошена")
+
+        if message:
+            request.message = message
+            request.save()
+
+        return request
 
 
 class Friend(models.Model):
