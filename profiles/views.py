@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
@@ -9,15 +9,29 @@ from django.utils.decorators import method_decorator
 class WelcomePageView(View):
     # Start page
     def get(self, request):
-        return render(request, 'profiles/welcome_page.html')
+        context = {}
+        if request.user.is_authenticated:
+            context['username'] = request.user.username
+            return render(request, 'profiles/welcome_page.html', context)
 
 
-class PublicProfileView(View):
-    # Creating a public profile view
-    @method_decorator(login_required)
-    def get(self, request, username):
-        user = get_object_or_404(Profile, username=username)
-        return render(request, 'profiles/public_profile.html', {"context": user})
+class PublicProfileView(DetailView):
+    model = Profile
+    template_name = 'profiles/public_profile.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    context_object_name = 'user'
+    object = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.object.username 
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 @login_required
@@ -30,7 +44,7 @@ def ProfileEditView(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('welcome_page')
+            return redirect('/welcome_page/')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=user)

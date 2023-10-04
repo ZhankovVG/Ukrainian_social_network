@@ -19,18 +19,18 @@
                         iN UA
                     </h2>
                 </div>
-                <li><a href="{% url 'welcome_page' %}">Головна</a></li>
+                <li><a href="{% url 'profile:welcome_page' %}">Головна</a></li>
             
+                <li><a href="{% url 'profile:public_profile' username=user.username %}">Профіль</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'public_profile' username=user.username %}">Профіль</a></li>
-                <li><a href="#">Друзі</a></li>
+                <li><a href="{% url 'friends:friend_requests' %}">Друзі</a></li>
 
                 <form action="{% url 'friends:find_friends' %}" method="GET" class="search-form">
                     <input type="search" name="search" placeholder="Пошук" class="search-button" style="width: 60px; height: 20px;">
                     <button type="submit">Знайти</button>
                 </form>
 
-                <li><a href="{% url 'edit_profile'  %}">Налаштування</a></li>
+                <li><a href="{% url 'profile:edit_profile' %}">Налаштування</a></li>
 
                 <li><a href="{% url 'account_logout' %}">Выйти</a></li>
                 {% else %}
