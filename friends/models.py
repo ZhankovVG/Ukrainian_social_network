@@ -118,6 +118,8 @@ class FriendshipRequest(models.Model):
     viewed = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
 
+    objects = FriendshipManager()
+
     class Meta:
         verbose_name = 'Запит на дружбу'
         verbose_name_plural = 'Запити на дружбу'

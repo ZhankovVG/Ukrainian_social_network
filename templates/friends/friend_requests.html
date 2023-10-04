@@ -4,4 +4,35 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+<main>
+    <div>
+        <h2>Ваши друзья:</h2>
+        <ul>
+            {% if friends %}
+                {% for friend in friends %}
+                <li>
+                    {{ friend.to_user.username }}
+                </li>
+                {% endfor %}
+            {% else %}
+                <p>У вас пока нет друзей.</p>
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        <h2>Запросы на дружбу:</h2>
+        <ul>
+            {% if friendship_requests %}
+                {% for request in friendship_requests %}
+                <li>
+                    {{ request.from_user.first_name }} отправил запрос на дружбу
+                    <a href="{% url 'friends:confirm_friend_request' request.id %}">Подтвердить запрос на дружбу</a>
+                </li>
+                {% endfor %}
+            {% else %}
+                <p>У вас нет неподтвержденных запросов на дружбу.</p>
+            {% endif %}
+        </ul>
+    </div>
+</main>
 {% endblock %}

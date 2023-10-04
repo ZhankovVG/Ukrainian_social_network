@@ -18,16 +18,21 @@
             </div>
             {% endif %}
             <div class="user-info">
-                <a href="{% url 'public_profile' user.username %}">
+                <a href="{% url 'profile:public_profile' user.username %}">
                     <p class="user_name_search">Имя: {% if user.first_name %}
                         {{ user.first_name }}{% else %}{{user.username }}{% endif %}</p>
                 </a>
                 <p class="user-last-name">Фамилия: {{ user.last_name }}</p>
 
-                <form id="friendship-request-form" method="post"
-                    action="{% url 'friends:send_friend_request' user.id %}">
+                <form id="friendship-request-form" method="post" action="{% url 'friends:send_friend_request' user.id %}">
                     {% csrf_token %}
-                    <button type="submit">Додати в друзі</button>
+                    <button type="submit">
+                        {% if user.id in user_ids_with_pending_requests %}
+                            Заявка надіслана
+                        {% else %}
+                            Додати в друзі
+                        {% endif %}
+                    </button>
                 </form>
 
             </div>
