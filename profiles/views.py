@@ -7,12 +7,10 @@ from django.utils.decorators import method_decorator
 
 
 class WelcomePageView(View):
-    # Start page
+    @method_decorator(login_required)
     def get(self, request):
-        context = {}
-        if request.user.is_authenticated:
-            context['username'] = request.user.username
-            return render(request, 'profiles/welcome_page.html', context)
+        context = {'username': request.user.username}
+        return render(request, 'profiles/welcome_page.html', context)
 
 
 class PublicProfileView(DetailView):
@@ -44,7 +42,7 @@ def ProfileEditView(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('/welcome_page/')
+            return redirect('/')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=user)
