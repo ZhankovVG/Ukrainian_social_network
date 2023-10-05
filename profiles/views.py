@@ -7,12 +7,10 @@ from django.utils.decorators import method_decorator
 
 
 class WelcomePageView(View):
-    # Start page
+    @method_decorator(login_required)
     def get(self, request):
-        context = {}
-        if request.user.is_authenticated:
-            context['username'] = request.user.username
-            return render(request, 'profiles/welcome_page.html', context)
+        context = {'username': request.user.username}
+        return render(request, 'profiles/welcome_page.html', context)
 
 
 class PublicProfileView(DetailView):

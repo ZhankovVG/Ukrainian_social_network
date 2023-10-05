@@ -11,6 +11,7 @@ class Profile(AbstractUser):
     )
     phone = models.CharField(max_length=20, blank=True, null=True)
     avatar = models.ImageField(upload_to='user/avatar/', blank=True, null=True)
+    is_online = models.BooleanField(default=False)
     bio = models.TextField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=7, choices=GENDER, default='animal', blank=True)

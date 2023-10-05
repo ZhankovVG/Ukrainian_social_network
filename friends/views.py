@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from django.http import JsonResponse
+from django.urls import reverse
 
 
 class FindFriendsListView(LoginRequiredMixin, ListView):
@@ -38,10 +38,11 @@ class FriendRequestsListView(LoginRequiredMixin, ListView):
     template_name = 'friends/friend_requests.html'
 
     def get_queryset(self):
-        return Friend.objects.filter(to_user=self.request.user)
+        return Friend.objects.got_friend_requests(user=self.request.user)
     
 
 class SendFriendshipRequestView(View):
+    # Friend request
     def post(self, request, user_id):
         target_user = get_object_or_404(Profile, id=user_id)
 
@@ -67,7 +68,7 @@ class SendFriendshipRequestView(View):
                 "Запит на дружбу надіслано успішно."
             )
 
-        return redirect('welcome_page', user_id=user_id)
+        return redirect(reverse('profile:welcome_page'))
 
 
 def confirm_friend_request(request, request_id):
@@ -81,4 +82,4 @@ def confirm_friend_request(request, request_id):
 
     messages.success(request, f"Запрос на дружбу с {friend_request.from_user} подтвержден.")
 
-    return redirect('/friends:welcome_page/')
+    return redirect(reverse('profile:welcome_page'))

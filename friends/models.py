@@ -3,6 +3,7 @@ from profiles.models import Profile
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from friends.exceptions import AlreadyFriendsError, AlreadyExistsError
+from django.db.models import Q
 
 
 class FriendshipManager(models.Manager):
@@ -11,50 +12,109 @@ class FriendshipManager(models.Manager):
     def friends(self, user):
         # Return a list of all friends
         qs = (
-            Friend.objects.select_related('from_user', 'to_user')
+            Friend.objects.select_related("from_user", "to_user")
                 .filter(to_user=user)
                 .all()
         )
         friends = [u.from_user for u in qs]
+
         return friends
-    
+
     def requests(self, user):
         # Return a list of friendship requests
         qs = (
-            FriendshipRequest.objects.select_related('from_user', 'to_user')
+            FriendshipRequest.objects.select_related("from_user", "to_user")
                 .filter(to_user=user)
                 .all()
         )
         requests = list(qs)
+
         return requests
-    
-    def send_requests(self, user):
+
+    def sent_requests(self, user):
         # Return a list of friendship requests from user
         qs = (
-            FriendshipRequest.objects.select_related('from_user', 'to_user')
-                .filter(to_user=user)
+            FriendshipRequest.objects.select_related("from_user", "to_user")
+                .filter(from_user=user)
                 .all()
         )
         requests = list(qs)
+
         return requests
-    
+
     def got_friend_requests(self, user):
         # Return a list of friendship requests user got
         qs = (
-            FriendshipRequest.objects.select_related('from_user__profile', 'to_user')
+            FriendshipRequest.objects.select_related("from_user__profile", "to_user")
                 .filter(to_user=user)
                 .all()
         )
         unread_requests = list(qs)
         return unread_requests
-    
+
+    def unread_requests(self, user):
+        # Return a list of unread friendship requests
+        qs = (
+            FriendshipRequest.objects.select_related("from_user", "to_user")
+                .filter(to_user=user, viewed__isnull=True)
+                .all()
+        )
+        unread_requests = list(qs)
+
+        return unread_requests
+
+    def unread_request_count(self, user):
+        # Return a count of unread friendship requests
+        count = FriendshipRequest.objects.select_related("from_user", "to_user").filter(to_user=user,
+                                                                                        viewed__isnull=True).count()
+        return count
+
+    def read_requests(self, user):
+        # Return a list of read friendship requests
+        qs = (
+            FriendshipRequest.objects.select_related("from_user", "to_user")
+                .filter(to_user=user, viewed__isnull=False)
+                .all()
+        )
+        read_requests = list(qs)
+
+        return read_requests
+
+    def rejected_requests(self, user):
+        # Return a list of rejected friendship requests
+        qs = (
+            FriendshipRequest.objects.select_related("from_user", "to_user")
+                .filter(to_user=user, rejected__isnull=False)
+                .all()
+        )
+        rejected_requests = list(qs)
+
+        return rejected_requests
+
+    def unrejected_requests(self, user):
+        # All requests that haven't been rejected
+        qs = (
+            FriendshipRequest.objects.select_related("from_user", "to_user")
+                .filter(to_user=user, rejected__isnull=True)
+                .all()
+        )
+        unrejected_requests = list(qs)
+
+        return unrejected_requests
+
+    def unrejected_request_count(self, user):
+        # Return a count of unrejected friendship requests
+        count = FriendshipRequest.objects.select_related("from_user", "to_user").filter(to_user=user,
+                                                                                        rejected__isnull=True).count()
+        return count
+
     def add_friend(self, from_user, to_user, message=None):
-        """ Create a friendship request """
+        # Create a friendship request
         if from_user == to_user:
-            raise ValidationError("Користувачі не можуть дружити самі із собою")
+            raise ValidationError("Користувачі не можуть дружити самі із собою.")
 
         if self.are_friends(from_user, to_user):
-            raise AlreadyFriendsError("Користувачі вже є друзями")
+            raise AlreadyFriendsError("Користувачі вже є друзями.")
 
         if FriendshipRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
             raise AlreadyExistsError("Ви вже просили дружбу у цього користувача.")
@@ -70,13 +130,36 @@ class FriendshipManager(models.Manager):
         )
 
         if created is False:
-            raise AlreadyExistsError("Дружба вже запрошена")
+            raise AlreadyExistsError("Дружба вже запрошена.")
 
         if message:
             request.message = message
             request.save()
 
         return request
+
+    def remove_friend(self, from_user, to_user):
+        # Destroy a friendship relationship
+        try:
+            qs = Friend.objects.filter(
+                Q(to_user=to_user, from_user=from_user) | Q(to_user=from_user, from_user=to_user))
+            distinct_qs = qs.distinct().all()
+
+            if distinct_qs:
+                qs.delete()
+                return True
+            else:
+                return False
+        except Friend.DoesNotExist:
+            return False
+
+    def are_friends(self, user1, user2):
+        # Are these two users friends?
+        try:
+            Friend.objects.get(to_user=user1, from_user=user2)
+            return True
+        except Friend.DoesNotExist:
+            return False
 
 
 class Friend(models.Model):
@@ -85,6 +168,8 @@ class Friend(models.Model):
     from_user = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name='user')
     created_at = models.DateTimeField(default=timezone.now, db_index=True)
+
+    objects = FriendshipManager()
 
     class Meta:
         verbose_name = 'Друг'
@@ -118,8 +203,6 @@ class FriendshipRequest(models.Model):
     viewed = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
 
-    objects = FriendshipManager()
-
     class Meta:
         verbose_name = 'Запит на дружбу'
         verbose_name_plural = 'Запити на дружбу'
@@ -129,19 +212,26 @@ class FriendshipRequest(models.Model):
         return f'Користувач #{self.from_user_id} надіслав запит на дружбу #{self.to_user_id}'
 
     def accept(self):
-        receiver_friend_list = Friend.objects.get(from_user=self.to_user)
-        if receiver_friend_list:
-            receiver_friend_list.add_friend(self.from_user)
-            sender_friend_list = Friend.objects.get(from_user=self.from_user)
-            if sender_friend_list:
-                sender_friend_list.add_friend(self.to_user)
-            self.is_active = False
-            self.save()
+        # Accept this friendship request
+        Friend.objects.create(from_user=self.from_user, to_user=self.to_user)
+        Friend.objects.create(from_user=self.to_user, to_user=self.from_user)
 
-    def decline(self):
-        self.is_active = False
+        self.delete()
+
+        # Delete any reverse requests
+        FriendshipRequest.objects.filter(
+            from_user=self.to_user, to_user=self.from_user
+        ).delete()
+
+        return True
+
+    def reject(self):
+        # Reject this friendship request
+        self.rejected = timezone.now()
         self.save()
+        return True
 
     def cancel(self):
-        self.is_active = False
-        self.save()
+        # Cancel this friendship request
+        self.delete()
+        return True
