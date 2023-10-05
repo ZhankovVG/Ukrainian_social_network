@@ -12,8 +12,7 @@ class FriendshipManager(models.Manager):
     def friends(self, user):
         # Return a list of all friends
         qs = (
-            Friend.objects.select_related("from_user", "to_user")
-                .filter(to_user=user)
+            Friend.objects.filter(to_user=user)
                 .all()
         )
         friends = [u.from_user for u in qs]
@@ -23,8 +22,7 @@ class FriendshipManager(models.Manager):
     def requests(self, user):
         # Return a list of friendship requests
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(to_user=user)
+            FriendshipRequest.objects.filter(to_user=user)
                 .all()
         )
         requests = list(qs)
@@ -34,8 +32,7 @@ class FriendshipManager(models.Manager):
     def sent_requests(self, user):
         # Return a list of friendship requests from user
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(from_user=user)
+            FriendshipRequest.objects.filter(from_user=user)
                 .all()
         )
         requests = list(qs)
@@ -45,8 +42,7 @@ class FriendshipManager(models.Manager):
     def got_friend_requests(self, user):
         # Return a list of friendship requests user got
         qs = (
-            FriendshipRequest.objects.select_related("from_user__profile", "to_user")
-                .filter(to_user=user)
+            FriendshipRequest.objects.filter(to_user=user)
                 .all()
         )
         unread_requests = list(qs)
@@ -55,8 +51,7 @@ class FriendshipManager(models.Manager):
     def unread_requests(self, user):
         # Return a list of unread friendship requests
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(to_user=user, viewed__isnull=True)
+            FriendshipRequest.objects.filter(to_user=user, viewed__isnull=True)
                 .all()
         )
         unread_requests = list(qs)
@@ -65,15 +60,13 @@ class FriendshipManager(models.Manager):
 
     def unread_request_count(self, user):
         # Return a count of unread friendship requests
-        count = FriendshipRequest.objects.select_related("from_user", "to_user").filter(to_user=user,
-                                                                                        viewed__isnull=True).count()
+        count = FriendshipRequest.objects.filter(to_user=user, viewed__isnull=True).count()
         return count
 
     def read_requests(self, user):
         # Return a list of read friendship requests
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(to_user=user, viewed__isnull=False)
+            FriendshipRequest.objects.filter(to_user=user, viewed__isnull=False)
                 .all()
         )
         read_requests = list(qs)
@@ -83,8 +76,7 @@ class FriendshipManager(models.Manager):
     def rejected_requests(self, user):
         # Return a list of rejected friendship requests
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(to_user=user, rejected__isnull=False)
+            FriendshipRequest.objects.filter(to_user=user, rejected__isnull=False)
                 .all()
         )
         rejected_requests = list(qs)
@@ -94,8 +86,7 @@ class FriendshipManager(models.Manager):
     def unrejected_requests(self, user):
         # All requests that haven't been rejected
         qs = (
-            FriendshipRequest.objects.select_related("from_user", "to_user")
-                .filter(to_user=user, rejected__isnull=True)
+            FriendshipRequest.objects.filter(to_user=user, rejected__isnull=True)
                 .all()
         )
         unrejected_requests = list(qs)
@@ -104,8 +95,7 @@ class FriendshipManager(models.Manager):
 
     def unrejected_request_count(self, user):
         # Return a count of unrejected friendship requests
-        count = FriendshipRequest.objects.select_related("from_user", "to_user").filter(to_user=user,
-                                                                                        rejected__isnull=True).count()
+        count = FriendshipRequest.objects.filter(to_user=user, rejected__isnull=True).count()
         return count
 
     def add_friend(self, from_user, to_user, message=None):
