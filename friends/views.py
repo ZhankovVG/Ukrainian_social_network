@@ -39,7 +39,7 @@ class FriendRequestsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Friend.objects.got_friend_requests(user=self.request.user)
-    
+
 
 class SendFriendshipRequestView(View):
     # Friend request
