@@ -4,33 +4,54 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<main>
+<main class="my_friends">
     <div>
-        <h2>Ваши друзья:</h2>
+        <h2>Ваші друзі:</h2>
         <ul>
+            
             {% if friends %}
-                {% for friend in users %}
-                <li>
-                    {{ friend.to_user.username }}
+            {% for friend in friends %}
+                <li class="user_info">
+                    {% if friend.to_user.avatar %}
+                        <img src="{{ friend.to_user.avatar.url }}" alt="avatar_user">
+                    {% else %}
+                        <div class="user-avatar1">
+                            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+                        </div>
+                    {% endif %}
+                    <p>{{ friend.to_user.first_name }} {{ friend.to_user.last_name }}</p>
                 </li>
-                {% endfor %}
-            {% else %}
-                <p>У вас пока нет друзей.</p>
-            {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>У вас пока нет друзей.</p>
+        {% endif %}
         </ul>
     </div>
+
     <div>
-        <h2>Запросы на дружбу:</h2>
+        <h2>Запити на дружбу:</h2>
         <ul>
-            {% if friendship_requests %}
-                {% for request in friendship_requests %}
-                <li>
-                    {{ request.from_user.username }} отправил запрос на дружбу
-                    <a href="{% url 'friends:confirm_friend_request' request.id %}">Подтвердить запрос на дружбу</a>
-                </li>
-                {% endfor %}
+            {% if friend_requests %}
+            {% for request in friend_requests %}
+
+            <li class="user_info">
+                {% if user.avatar %}
+                <img src="{{ request.from_user.avatar.url }}" alt="avatar_user">
+                {% else %}
+                <div class="user-avatar1">
+                    <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+                </div>
+                {% endif %}
+
+                <p>{{ request.from_user.first_name }} {{ request.from_user.last_name }}</p>
+                <button>
+                    <a href="{% url 'friends:confirm_friend_request' request.id %}"> Підтвердити запит на дружбу.</a>
+                </button> 
+            </li>
+            
+            {% endfor %}
             {% else %}
-                <p>У вас нет неподтвержденных запросов на дружбу.</p>
+            <p>Ви не маєте непідтверджених запитів на дружбу.</p>
             {% endif %}
         </ul>
     </div>

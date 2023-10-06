@@ -1,0 +1,52 @@
+.sd {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.user_info {
+    display: flex; /* Используем flexbox для выравнивания элементов в строку */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    border: 1px solid #ccc; /* Бордер */
+    border-radius: 5px; /* Закругленные углы */
+    margin: 10px; /* Отступы между пользователями */
+    padding: 10px; /* Внутренние отступы */
+}
+
+.user_info img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user_info a {
+    text-decoration: none;
+}
+
+.user_info button {
+    margin-left: 30px;
+}
+
+.user_info button:hover {
+    background-color: rgb(255, 255, 10);
+}
