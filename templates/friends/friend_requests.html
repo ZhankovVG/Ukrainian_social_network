@@ -8,7 +8,6 @@
     <div>
         <h2>Ваші друзі:</h2>
         <ul>
-            
             {% if friends %}
             {% for friend in friends %}
                 <li class="user_info">
@@ -23,7 +22,7 @@
                 </li>
             {% endfor %}
         {% else %}
-            <p>У вас пока нет друзей.</p>
+            <p>У вас поки що немає друзів.</p>
         {% endif %}
         </ul>
     </div>
@@ -47,6 +46,9 @@
                 <button>
                     <a href="{% url 'friends:confirm_friend_request' request.id %}"> Підтвердити запит на дружбу.</a>
                 </button> 
+                <button>
+                    <a href="{% url 'friends:cancel_friend_request' request.id %}"> Відхилити.</a>
+                </button>
             </li>
             
             {% endfor %}
