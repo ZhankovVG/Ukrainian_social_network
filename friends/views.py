@@ -68,7 +68,7 @@ class SendFriendshipRequestView(View):
                 "Запит на дружбу надіслано успішно."
             )
 
-        return redirect(reverse('profile:welcome_page'))
+        return redirect('profile:welcome_page')
 
 
 def confirm_friend_request(request, request_id):
@@ -85,6 +85,7 @@ def confirm_friend_request(request, request_id):
 
 
 def cancel_friend_request(request, request_id):
+    # Cancel friends
     friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
 
     if friend_request.to_user != request.user:
