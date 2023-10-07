@@ -215,12 +215,6 @@ class FriendshipRequest(models.Model):
 
         return True
 
-    def reject(self):
-        # Reject this friendship request
-        self.rejected = timezone.now()
-        self.save()
-        return True
-
     def cancel(self):
         # Cancel this friendship request
         self.delete()
