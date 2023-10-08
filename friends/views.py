@@ -6,8 +6,16 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from django.urls import reverse
 
+
+class FriendsListView(LoginRequiredMixin, ListView):
+    model = Friend
+    context_object_name = 'friends'
+    template_name = 'friends/all_friends.html'
+
+    def get_queryset(self):
+        return Friend.objects.friends(self.request.user)
+    
 
 class FindFriendsListView(LoginRequiredMixin, ListView):
     # Search friends
@@ -17,16 +25,11 @@ class FindFriendsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         search_query = self.request.GET.get('search')
-        current_user_friends = self.request.user.friends.values('id')
-        sent_request = list(
-            FriendshipRequest.objects.filter(Q(from_user=self.request.user))
-            .exclude(to_user=self.request.user.id)
-            .values_list('to_user_id', flat=True))
+        current_user_friends = Friend.objects.friends(self.request.user)
+        users = Profile.objects.exclude(id__in=current_user_friends).exclude(id=self.request.user.id)
 
-        users = Profile.objects.exclude(id__in=current_user_friends).exclude(id__in=sent_request).exclude(
-            id=self.request.user.id)
         if search_query:
-            users = users.filter(username__icontains=search_query)
+            users = users.filter(Q(username__icontains=search_query) | Q(first_name__icontains=search_query) | Q(last_name__icontains=search_query))
 
         return users
      

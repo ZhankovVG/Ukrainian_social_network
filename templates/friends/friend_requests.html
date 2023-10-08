@@ -6,28 +6,6 @@
 {% block content %}
 <main class="my_friends">
     <div>
-        <h2>Ваші друзі:</h2>
-        <ul>
-            {% if friends %}
-            {% for friend in friends %}
-                <li class="user_info">
-                    {% if friend.to_user.avatar %}
-                        <img src="{{ friend.to_user.avatar.url }}" alt="avatar_user">
-                    {% else %}
-                        <div class="user-avatar1">
-                            <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
-                        </div>
-                    {% endif %}
-                    <p>{{ friend.to_user.first_name }} {{ friend.to_user.last_name }}</p>
-                </li>
-            {% endfor %}
-        {% else %}
-            <p>У вас поки що немає друзів.</p>
-        {% endif %}
-        </ul>
-    </div>
-
-    <div>
         <h2>Запити на дружбу:</h2>
         <ul>
             {% if friend_requests %}

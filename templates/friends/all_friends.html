@@ -1,0 +1,30 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+{% block content %}
+<main class="my_friends">
+    <div>
+        <h2>Ваші друзі:</h2>
+        <ul>
+            {% if friends %}
+            {% for friend in friends %}
+            <a href="">
+                <li class="user_info">
+                    {% if friend.avatar %}
+                    <img src="{{ friend.avatar.url }}" alt="avatar_user">
+                    {% else %}
+                    <div class="user-avatar1">
+                        <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+                    </div>
+                    {% endif %}
+                    <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                </li>
+            </a>
+            {% endfor %}
+            {% else %}
+            <p>У вас поки що немає друзів.</p>
+            {% endif %}
+        </ul>
+    </div>
+</main>
+{% endblock %}
