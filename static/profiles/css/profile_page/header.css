@@ -7,7 +7,6 @@ body {
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    /* min-height: 100vh;  */
 }
 
 
@@ -42,6 +41,14 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     color: #fff;
+}
+
+.header_li li a {
+    text-decoration: none;
+}
+
+.header_li li a:hover  {
+    color: #fbff00;
 }
 
 main {

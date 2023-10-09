@@ -9,6 +9,7 @@ from django.contrib import messages
 
 
 class FriendsListView(LoginRequiredMixin, ListView):
+    # All friends
     model = Friend
     context_object_name = 'friends'
     template_name = 'friends/all_friends.html'
@@ -17,21 +18,28 @@ class FriendsListView(LoginRequiredMixin, ListView):
         return Friend.objects.friends(self.request.user)
     
 
-class FindFriendsListView(LoginRequiredMixin, ListView):
+class FindFriendsView(LoginRequiredMixin, ListView):
     # Search friends
-    model = Friend
+    model = Profile
     context_object_name = 'users'
     template_name = "friends/find_friends.html"
 
     def get_queryset(self):
-        search_query = self.request.GET.get('search')
-        current_user_friends = Friend.objects.friends(self.request.user)
-        users = Profile.objects.exclude(id__in=current_user_friends).exclude(id=self.request.user.id)
+        query = self.request.GET.get('search')
+        current_user = self.request.user
+        current_user_friends = Friend.objects.friends(current_user)
 
-        if search_query:
-            users = users.filter(Q(username__icontains=search_query) | Q(first_name__icontains=search_query) | Q(last_name__icontains=search_query))
+        if query:
+            found_friends = Profile.objects.exclude(id=current_user.id).exclude(id__in=[friend.id for friend in current_user_friends])
+            found_friends = found_friends.filter(
+                Q(username__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            ).distinct()
+        else:
+            found_friends = Profile.objects.none()
 
-        return users
+        return found_friends
      
         
 class FriendRequestsListView(LoginRequiredMixin, ListView):

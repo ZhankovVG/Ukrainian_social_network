@@ -24,12 +24,12 @@ a:hover {
 }
 
 .user_info {
-    display: flex; /* Используем flexbox для выравнивания элементов в строку */
-    align-items: center; /* Выравниваем элементы по вертикали */
-    border: 1px solid #ccc; /* Бордер */
-    border-radius: 5px; /* Закругленные углы */
-    margin: 10px; /* Отступы между пользователями */
-    padding: 10px; /* Внутренние отступы */
+    display: flex; 
+    align-items: center; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    margin: 10px; 
+    padding: 10px; 
 }
 
 .user_info img {

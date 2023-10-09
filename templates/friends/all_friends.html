@@ -2,22 +2,27 @@
 {% load static %}
 
 {% block content %}
-<main class="my_friends">
+<main class="my_friends2">
     <div>
         <h2>Ваші друзі:</h2>
         <ul>
             {% if friends %}
             {% for friend in friends %}
             <a href="">
-                <li class="user_info">
+                <li class="user_info2">
                     {% if friend.avatar %}
-                    <img src="{{ friend.avatar.url }}" alt="avatar_user">
+                    <div class="user-avatar2">
+                        <img src="{{ friend.avatar.url }}" alt="avatar_user">
+                    </div>
                     {% else %}
-                    <div class="user-avatar1">
+                    <div class="user-avatar2">
                         <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
                     </div>
                     {% endif %}
-                    <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                    <div class="user_details2">
+                        <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                        <button><a href=""></a>Видалити із друзів</button>
+                    </div>
                 </li>
             </a>
             {% endfor %}
