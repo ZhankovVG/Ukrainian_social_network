@@ -4,7 +4,10 @@
 {% block content %}
 <main class="my_friends2">
     <div>
-        <h2>Ваші друзі:</h2>
+        <div class="friends-header">
+            <h2>Ваші друзі</h2>
+            <a href="{% url 'friends:friend_requests' %}" class="friendship_requests"><h2>Запити на дружбу</h2></a>
+        </div>
         <ul>
             {% if friends %}
             {% for friend in friends %}

@@ -7,8 +7,24 @@
     padding: 10px;
 }
 
+.friends-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-right: 300px;
+}
+
 .my_friends2 a {
     text-decoration: none;
+}
+
+.friendship_requests {
+    color: black;
+    
+} 
+
+.friendship_requests:hover {
+    color: #4169E1;
 }
 
 .user_details2 {
