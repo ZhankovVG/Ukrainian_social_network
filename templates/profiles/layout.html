@@ -13,7 +13,7 @@
 <body>
     <header>
         <nav>
-            <ul>
+            <ul class="header_li">
                 <div class="header-ua">
                     <h2>
                         iN UA
@@ -23,8 +23,7 @@
             
                 <li><a href="{% url 'profile:public_profile' username=user.username %}">Профіль</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'friends:friend_requests' %}">Друзі</a></li>
-                <li><a href="{% url 'friends:all_friends' %}">fri</a></li>
+                <li><a href="{% url 'friends:all_friends' %}">Друзі</a></li>               
 
                 <form action="{% url 'friends:find_friends' %}" method="GET" class="search-form">
                     <input type="search" name="search" placeholder="Пошук" class="search-button" style="width: 60px; height: 20px;">

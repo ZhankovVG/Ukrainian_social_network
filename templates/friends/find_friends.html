@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="page_search">
-    <h2>Результаты поиска друзей</h2>
+    <h2>Результати пошуку друзів</h2>
 
     <h5>Вы искали: "{{ request.GET.search }}"</h5>
     <ul class="user-list">
@@ -19,10 +19,10 @@
             {% endif %}
             <div class="user-info">
                 <a href="{% url 'profile:public_profile' user.username %}">
-                    <p class="user_name_search">Имя: {% if user.first_name %}
+                    <p class="user_name_search">Ім'я: {% if user.first_name %}
                         {{ user.first_name }}{% else %}{{user.username }}{% endif %}</p>
                 </a>
-                <p class="user-last-name">Фамилия: {{ user.last_name }}</p>
+                <p class="user-last-name">Прізвище: {{ user.last_name }}</p>
 
                 <form method="post" action="{% url 'friends:send_friend_request' user.id %}">
                     {% csrf_token %}

@@ -1,0 +1,49 @@
+.user_info2 {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.friends-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-right: 300px;
+}
+
+.my_friends2 a {
+    text-decoration: none;
+}
+
+.friendship_requests {
+    color: black;
+    
+} 
+
+.friendship_requests:hover {
+    color: #4169E1;
+}
+
+.user_details2 {
+    flex-grow: 1;
+}
+
+.user-avatar2 img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user_details2 button {
+    margin-right: -30px;
+    margin-top: -100px;
+}
+
+.user_details2 button:hover {
+    background-color: rgb(255, 255, 10);
+    cursor: pointer;
+}

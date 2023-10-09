@@ -4,6 +4,7 @@ from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 
 class WelcomePageView(View):
@@ -32,7 +33,6 @@ class PublicProfileView(DetailView):
         return self.render_to_response(context)
 
 
-@login_required
 def ProfileEditView(request):
     # Apdate data users
     user = request.user
@@ -42,7 +42,8 @@ def ProfileEditView(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('/')
+            updated_username = user.username
+            return redirect(reverse('profile:public_profile', kwargs={'username': updated_username}))
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=user)
