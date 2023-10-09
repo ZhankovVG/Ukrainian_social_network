@@ -82,27 +82,30 @@ class SendFriendshipRequestView(View):
         return redirect('friends:find_friends')
 
 
-def confirm_friend_request(request, request_id):
-    # Accept request friends
-    friend_request = FriendshipRequest.objects.get(pk=request_id)
+class ConfirmFriendRequestView(View):
+    def get(self, request, request_id):
+        friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
 
-    if friend_request.to_user != request.user:
-        messages.error(request, "Вы не можете подтвердить этот запрос на дружбу.")
-        return redirect('confirm_friend_request')
-    friend_request.accept()
-    messages.success(request, f"Запрос на дружбу с {friend_request.from_user} подтвержден.")
+        if friend_request.to_user != request.user:
+            messages.error(request, "Вы не можете подтвердить этот запрос на дружбу.")
+            return redirect('friends:confirm_friend_request')
 
-    return redirect('profile:welcome_page')
+        friend_request.accept()
+        messages.success(request, f"Запрос на дружбу с {friend_request.from_user} подтвержден.")
+
+        referring_url = request.META.get('HTTP_REFERER', 'friends:confirm_friend_request')
+        return redirect(referring_url)
 
 
-def cancel_friend_request(request, request_id):
-    # Cancel friends
-    friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
+class CancelFriendRequestView(View):
+    def get(self, request, request_id):
+        friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
 
-    if friend_request.to_user != request.user:
-        messages.error(request, "Вы не можете отклонить этот запрос на дружбу.")
-    else:
-        friend_request.cancel()
-        messages.success(request, "Запрос на дружбу отклонен.")
+        if friend_request.to_user != request.user:
+            messages.error(request, "Вы не можете отклонить этот запрос на дружбу.")
+        else:
+            friend_request.cancel()
+            messages.success(request, "Запрос на дружбу отклонен.")
 
-    return redirect('profile:welcome_page')
+        referring_url = request.META.get('HTTP_REFERER', 'friends:cancel_friend_request')
+        return redirect(referring_url)

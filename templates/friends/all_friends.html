@@ -11,7 +11,7 @@
         <ul>
             {% if friends %}
             {% for friend in friends %}
-            <a href="">
+            <a href="{% url 'profile:public_profile' user.username %}">
                 <li class="user_info2">
                     {% if friend.avatar %}
                     <div class="user-avatar2">
@@ -24,7 +24,7 @@
                     {% endif %}
                     <div class="user_details2">
                         <p>{{ friend.first_name }} {{ friend.last_name }}</p>
-                        <button><a href=""></a>Видалити із друзів</button>
+                        <!-- <button><a href=""></a>Видалити із друзів</button> -->
                     </div>
                 </li>
             </a>
