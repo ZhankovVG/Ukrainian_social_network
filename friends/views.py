@@ -79,7 +79,7 @@ class SendFriendshipRequestView(View):
                 "Запит на дружбу надіслано успішно."
             )
 
-        return redirect('profile:welcome_page')
+        return redirect('friends:find_friends')
 
 
 def confirm_friend_request(request, request_id):
