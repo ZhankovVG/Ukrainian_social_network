@@ -214,8 +214,13 @@ class FriendshipRequest(models.Model):
         ).delete()
 
         return True
+    
+    def decline(self):
+        # Cancel request friend
+        self.is_active = False
+        self.save()
 
     def cancel(self):
-        # Cancel this friendship request
+        # Delete this friendship request
         self.delete()
         return True
