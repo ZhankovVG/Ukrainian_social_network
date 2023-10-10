@@ -83,6 +83,7 @@ class SendFriendshipRequestView(View):
 
 
 class ConfirmFriendRequestView(View):
+    # Accept request
     def get(self, request, request_id):
         friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
 
@@ -97,7 +98,8 @@ class ConfirmFriendRequestView(View):
         return redirect(referring_url)
 
 
-class CancelFriendRequestView(View):
+class DeleteFriendRequestView(View):
+    # Delete friends
     def get(self, request, request_id):
         friend_request = get_object_or_404(FriendshipRequest, pk=request_id)
 
@@ -105,7 +107,23 @@ class CancelFriendRequestView(View):
             messages.error(request, "Вы не можете отклонить этот запрос на дружбу.")
         else:
             friend_request.cancel()
-            messages.success(request, "Запрос на дружбу отклонен.")
+            messages.success(request, "Запрос на дружбу удален.")
+
+        referring_url = request.META.get('HTTP_REFERER', 'friends:cancel_friend_request')
+        return redirect(referring_url)
+    
+
+class DeclineFriendshipRequestView(View):
+    # Cancel request friends
+    def get(self, request, request_id):
+        friendship_request = get_object_or_404(FriendshipRequest, pk=request_id)
+
+        if friendship_request.to_user == request.user and friendship_request.is_active:
+            friendship_request.decline()
+            messages.error(request, "Вы не можете отклонить этот запрос на дружбу.")
+        else:
+            friendship_request.cancel()
+            messages.success(request, "Запрос на дружбу удален.")
 
         referring_url = request.META.get('HTTP_REFERER', 'friends:cancel_friend_request')
         return redirect(referring_url)
