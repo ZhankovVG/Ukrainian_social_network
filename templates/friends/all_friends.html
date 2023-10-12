@@ -25,7 +25,9 @@
                     <div class="user_details2">
                         <p>{{ friend.first_name }} {{ friend.last_name }}</p>
                     </a>
-                        <button><a href="{% url 'friends:cancel_friend_request' friend.id %}"></a>Видалити із друзів</button>
+                    <button>
+                        <a href="{% url 'friends:remove_friend' friend.id %}">Видалити із друзів</a>
+                    </button>
                     </div>
                 </li>
             {% endfor %}
@@ -33,7 +35,6 @@
             <p>У вас поки що немає друзів.</p>
             {% endif %}
         </ul>
-        
     </div>
 </main>
 {% endblock %}
