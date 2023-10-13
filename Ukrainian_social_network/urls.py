@@ -12,6 +12,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('profiles.urls')),
     path('friends/', include('friends.urls')),
+    path('communications/', include('communications.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

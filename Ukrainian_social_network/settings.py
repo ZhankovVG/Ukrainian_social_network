@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'friends',
+    'communications',
     
     'crispy_forms',
     'crispy_bootstrap4',
@@ -156,6 +157,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'profiles.Profile'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+SESSION_COOKIE_AGE = 1209600
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

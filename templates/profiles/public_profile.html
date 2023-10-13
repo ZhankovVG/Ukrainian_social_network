@@ -25,13 +25,13 @@
             <h3>Друзі:</h3>
             <ul>
                 <a href="{% url 'friends:all_friends' %}">
-                    
+
                     {% for friend in friends %}
                     <img src="{{ user.avatar.url }}" alt="avatar_user">
                     <li>{{ friend.first_name }}</li>
                     <p>{{ friend.first_name }} {{ friend.last_name }}</p>
                     {% endfor %}
-                    
+
                 </a>
             </ul>
         </div>
@@ -40,7 +40,11 @@
     </div>
 
     <!-- Right side of the page -->
-    <p class="online-status"><img src="{% static 'profiles/img/on.png' %}" alt="img-on"> Online</p>
+    <p class="online-status">
+        <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
+             alt="img-status">
+        {% if is_online %} Online {% else %} Offline {% endif %}
+    </p>
 
     <div class="right-side">
         <div class="user-details">
