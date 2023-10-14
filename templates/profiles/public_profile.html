@@ -20,29 +20,42 @@
             {% endif %}
         </div>
         <!-- <button>завантажити фото</button> -->
+        {% endif %}
 
         <div class="user-friends">
             <h3>Друзі:</h3>
             <ul>
-                <a href="{% url 'friends:all_friends' %}">
-
-                    {% for friend in friends %}
-                    <img src="{{ user.avatar.url }}" alt="avatar_user">
-                    <li>{{ friend.first_name }}</li>
-                    <p>{{ friend.first_name }} {{ friend.last_name }}</p>
-                    {% endfor %}
-
-                </a>
-            </ul>
+                {% if friends %}
+                {% for friend in friends %}
+                <li class="user_info2">
+                    {% if friend.avatar %}
+                    <div class="user-avatar2">
+                        <img src="{{ friend.avatar.url }}" alt="avatar_user">
+                    </div>
+                    {% else %}
+                    <div class="user-avatar2">
+                        <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
+                    </div>
+                    {% endif %}
+                    <a href="{% url 'profile:public_profile' friend.id %}">
+                        <div class="user_details2">
+                            <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                    </a>
         </div>
-
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>У вас поки що немає друзів.</p>
         {% endif %}
+        </ul>
+    </div>
+
     </div>
 
     <!-- Right side of the page -->
     <p class="online-status">
         <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
-             alt="img-status">
+            alt="img-status">
         {% if is_online %} Online {% else %} Offline {% endif %}
     </p>
 
