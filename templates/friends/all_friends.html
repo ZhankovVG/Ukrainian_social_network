@@ -6,7 +6,9 @@
     <div>
         <div class="friends-header">
             <h2>Ваші друзі</h2>
-            <a href="{% url 'friends:friend_requests' %}" class="friendship_requests"><h2>Запити на дружбу</h2></a>
+            <a href="{% url 'friends:friend_requests' %}" class="friendship_requests">
+                <h2>Запити на дружбу</h2>
+            </a>
         </div>
         <ul>
             {% if friends %}
@@ -21,20 +23,20 @@
                     <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar-user">
                 </div>
                 {% endif %}
-                <a href="{% url 'profile:public_profile' friend.username %}">
+                <a href="{% url 'profile:public_profile' friend.id %}">
                     <div class="user_details2">
                         <p>{{ friend.first_name }} {{ friend.last_name }}</p>
-                    </a>
-                    <button>
-                        <a href="{% url 'friends:remove_friend' friend.id %}">Видалити із друзів</a>
-                    </button>
-                    </div>
-                </li>
-            {% endfor %}
-            {% else %}
-            <p>У вас поки що немає друзів.</p>
-            {% endif %}
-        </ul>
+                </a>
+                <button>
+                    <a href="{% url 'friends:remove_friend' friend.id %}">Видалити із друзів</a>
+                </button>
+    </div>
+    </li>
+    {% endfor %}
+    {% else %}
+    <p>У вас поки що немає друзів.</p>
+    {% endif %}
+    </ul>
     </div>
 </main>
 {% endblock %}

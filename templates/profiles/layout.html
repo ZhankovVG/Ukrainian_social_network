@@ -21,8 +21,8 @@
                 </div>
                 <li><a href="{% url 'profile:welcome_page' %}">Головна</a></li>
             
-                <li><a href="{% url 'profile:public_profile' username=user.username %}">Профіль</a></li>
                 {% if user.is_authenticated %}
+                <li><a href="{% url 'profile:public_profile' pk=user.pk %}">Профіль</a></li>
                 <li><a href="{% url 'friends:all_friends' %}">Друзі</a></li>               
 
                 <form action="{% url 'friends:find_friends' %}" method="GET" class="search-form">
