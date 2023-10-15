@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import *
 
+app_name = "communications"
+
 
 urlpatterns = [
     path('message/', all_messages, name='all_messages'),
