@@ -18,7 +18,7 @@
             </div>
             {% endif %}
             <div class="user-info">
-                <a href="{% url 'profile:public_profile' user.username %}">
+                <a href="{% url 'profile:public_profile' user.pk %}">
                     <p class="user_name_search">Ім'я: {% if user.first_name %}
                         {{ user.first_name }}{% else %}{{user.username }}{% endif %}</p>
                 </a>
