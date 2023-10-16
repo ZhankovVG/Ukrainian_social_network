@@ -1,0 +1,21 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+{% block content %}
+<main class="chat-with-friend">
+    <h2>Чат с {{ room.friend }}</h2>
+    <div id="chat-container">
+        {% for message in messages %}
+          <p>{{ message.author }}: {{ message.message }}</p>
+          <p>{{ message.friend }}: {{ message.message }}</p>
+        {% endfor %}
+      </div>
+    
+      <form method="post" action="{% url 'communications:chat_with_friend' friend_id=room.friend.id %}">
+        {% csrf_token %}
+        <input type="text" name="message" id="message" placeholder="Введите сообщение">
+        <button type="submit">Отправить</button>
+      </form>
+    </div>
+</main>
+{% endblock %}
