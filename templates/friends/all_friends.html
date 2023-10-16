@@ -30,6 +30,9 @@
                 <button>
                     <a href="{% url 'friends:remove_friend' friend.id %}">Видалити із друзів</a>
                 </button>
+                <button class="mmessage_sendinge">
+                    <a href="{% url 'communications:chat_with_friend' friend_id=friend.id %}">Написати повідомлення</a>
+                </button>
     </div>
     </li>
     {% endfor %}
