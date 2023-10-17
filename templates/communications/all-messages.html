@@ -4,28 +4,12 @@
 {% block content %}
 <main class="all-messages-with-friends">
     <h2>Всі повідомлення з друзями</h2>
-    {% if all_message %}
-        <ul>
-            {% for message_info in all_messages %}
-                <li>
-                    <h3>Кімната {{ message_info.room.id }}</h3>
-                    <ul>
-                        {% for message in message_info.messages %}
-                            <li>
-                                {% if message.author == request.user %}
-                                    <strong>Ви:</strong>
-                                {% else %}
-                                    <strong>Друг:</strong>
-                                {% endif %}
-                                {{ message.message }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>У вас поки немає повідомлень з друзями.</p>
-    {% endif %}
+    
+    <ul>
+        {% for friend in friends %}
+            <li><a href="{% url 'communications:chat_with_friend' friend.id %}">{{ friend.username }}</a></li>
+        {% endfor %}
+    </ul>
+    
 </main>
 {% endblock %}
