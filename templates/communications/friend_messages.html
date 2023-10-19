@@ -7,19 +7,21 @@
     <div id="chat-container">
         <ul>
             {% for message in messages %}
-                {% if message.author == request.user %}
-                    <li>Вы: {{ message.message }}</li>
-                {% else %}
-                    <li>{{ message.friend.username }}: {{ message.message }}</li>
-                {% endif %}
+            {% if message.author == request.user %}
+            <li>Вы: {{ message.message }}</li>
+            {% else %}
+            <li>{{ message.friend.username }}: {{ message.message }}</li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
-    
+
     <form method="post" action="{% url 'communications:chat_with_friend' friend_id=room.friend.id %}">
         {% csrf_token %}
         <input type="text" name="message" id="message" placeholder="Введите сообщение">
         <button type="submit">Отправить</button>
     </form>
+
+    {% include 'includes/scripts.html' %}
 </main>
 {% endblock %}
