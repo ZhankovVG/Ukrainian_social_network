@@ -5,8 +5,18 @@
 
 {% block content %}
 <main>
+<!-- Left side of the page -->
+    <div>
+        <ul>
+            <li><a href="{% url 'profile:welcome_page' %}">Головна</a></li>
+            <li><a href="{% url 'profile:public_profile' pk=user.pk %}">Профіль</a></li>
+            <li><a href="{% url 'friends:all_friends' %}">Друзі</a></li>
+            <li><a href="{% url 'communications:all_messages' %}">Повідомлення</a></li>
+            <li><a href="{% url 'profile:edit_profile' %}">Налаштування</a></li>
+        </ul>
+    </div>
     <!-- Left side of the page -->
-    <div class="left-side">
+    <div>
         {% if user.is_authenticated %}
         <div class="user-info">
             <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>

@@ -13,41 +13,45 @@
 <body>
     <header>
         <nav>
-            <ul class="header_li">
-                <div class="header-ua">
-                    <h2>
-                        iN UA
-                    </h2>
+            <div class="header-ua">
+                <div class="header-ua-left">
+                    <img src="{% static 'profiles/img/pngwin.png' %}" alt="win-img">
+                    <h2>iN UA</h2>
+
+                    <div class="search">
+                        <form action="{% url 'friends:find_friends' %}" method="GET" class="search-form">
+                            <div class="search-input">
+                                <i class="bi bi-search"></i>
+                                <input type="search" name="search" placeholder="Пошук" class="search-button">
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-                <li><a href="{% url 'profile:welcome_page' %}">Головна</a></li>
-            
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'profile:public_profile' pk=user.pk %}">Профіль</a></li>
-                <li><a href="{% url 'friends:all_friends' %}">Друзі</a></li>               
-                <li><a href="{% url 'communications:all_messages' %}">Повідомлення</a></li>
-
-                <form action="{% url 'friends:find_friends' %}" method="GET" class="search-form">
-                    <input type="search" name="search" placeholder="Пошук" class="search-button" style="width: 60px; height: 20px;">
-                    <button type="submit">Знайти</button>
-                </form>
-
-                <li><a href="{% url 'profile:edit_profile' %}">Налаштування</a></li>
-
-                <li><a href="{% url 'account_logout' %}">Выйти</a></li>
-                {% else %}
-                <li><a href="{% url 'account_login' %}" class="logout-link">Вхід</a></li>
-                <li><a href="{% url 'account_signup' %}" class="registration-link">Реєстрація</a></li>
-                {% endif %}
-            </ul>
+                <div class="authenticated">
+                    {% if user.is_authenticated %}  
+                    <ul class="header_li">
+                        <li>{{ user.username }}</li>
+                        <li><a href="{% url 'account_logout' %}">Вийти</a></li>
+                    </ul>
+                    {% else %}
+                    <ul class="header_li">
+                        <li><a href="{% url 'account_login' %}" class="logout-link">Вхід</a></li>
+                        <li><a href="{% url 'account_signup' %}" class="registration-link">Реєстрація</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
         </nav>
+        <hr>
     </header>
 
     {% block content %}
     {% endblock %}
 
-    <footer>
+    <!-- <footer>
         <p>&copy; 2023 iN UA соціальна мережа</p>
-    </footer>
+    </footer> -->
 </body>
 
 </html>
