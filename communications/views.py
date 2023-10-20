@@ -23,7 +23,6 @@ def chat_with_friend(request, friend_id):
     friend = get_object_or_404(User, id=friend_id)
     room, created = Room.objects.get_or_create(author=request.user, friend=friend)
 
-    # Проверьте, являются ли пользователи друзьями
     if not Friend.objects.are_friends(request.user, friend):
         return redirect(reverse_lazy('communications:all-messages'))
 
