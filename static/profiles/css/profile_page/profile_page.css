@@ -1,80 +1,64 @@
-/* Styles for the left side of the page */
-.left-side {
-    float: left;
-    width: 50%;
+/* Стили для основного контейнера страницы */
+.page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.right_side_bord {
-    width: 70%;
-    word-spacing: 3px;
-    float: right;
+  }
+  
+  /* Стили для левой части страницы */
+  .left-block {
+    flex: 1;
+    margin-right: 20px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Стили для центральной части страницы */
+  .center-block {
+    flex: 2;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Стили для правой части страницы */
+  .right-block {
+    flex: 1;
     margin-left: 20px;
-}
-
-.user-avatar {
-    width: 130px;
-    height: 200px;
-    box-shadow: 16px 14px 20px #0000008c;
-    border-radius: 10px;
-    position: relative;
-}
-
-.user-avatar img {
-    width: 100%;
-    height: auto;
-}
-
-.user-name {
-    margin: 0;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-}
-
-/* friend style start  */
-
-.user-friends {
-    width: 200px;
-    margin-top: 10px;
-    border: 1px solid #ccc; 
-    padding: 5px; 
-    max-height: 200px; 
-    overflow-y: auto;
-}
-
-.user-friends ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.user-friends li {
-    margin: 0;
-    padding: 5px 0;
-    border-bottom: 1px solid #ccc;
-}
-
-.user-friends h3 {
-    margin-top: 0;
-}
-
-/* friend style end  */
-
-
-/* Styles for the right side of the page */
-.right-side {
-    float: left;
-    width: 50%;
+    background-color: #f0f0f0;
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.online-status img {
-    width: 10px;
-}
-
-.online-status {
-    float: right;
-    height: 10px;
-}
-
+    border-radius: 5px;
+  }
+  
+  /* Стили для изображений аватаров */
+  .user-avatar, .user-avatar2 {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Стили для списка друзей */
+  .user-friends ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .user-friends li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .user-friends .user_info2 {
+    flex: 1;
+  }
+  
+  .user_details2 {
+    margin-left: 10px;
+  }
+  
+  /* Другие стили по вашему усмотрению */
+  

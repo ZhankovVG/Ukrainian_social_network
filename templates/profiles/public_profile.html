@@ -4,22 +4,17 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<main>
-<!-- Left side of the page -->
-    <div>
-        <ul>
-            <li><a href="{% url 'profile:welcome_page' %}">Головна</a></li>
-            <li><a href="{% url 'profile:public_profile' pk=user.pk %}">Профіль</a></li>
-            <li><a href="{% url 'friends:all_friends' %}">Друзі</a></li>
-            <li><a href="{% url 'communications:all_messages' %}">Повідомлення</a></li>
-            <li><a href="{% url 'profile:edit_profile' %}">Налаштування</a></li>
-        </ul>
-    </div>
-    <!-- Left side of the page -->
-    <div>
+<main class="page-container">
+
+    
+ 
+
+    <!-- Center part of the page start -->
+
+    <div class="center-block">
         {% if user.is_authenticated %}
         <div class="user-info">
-            <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+            
 
             {% if user.avatar %}
             <img class="user-avatar" src="{{ user.avatar.url }}" alt="avatar-user">
@@ -62,22 +57,30 @@
 
     </div>
 
-    <!-- Right side of the page -->
-    <p class="online-status">
-        <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
-            alt="img-status">
-        {% if is_online %} Online {% else %} Offline {% endif %}
-    </p>
+    <!-- Center part of the page end -->
 
-    <div class="right-side">
-        <div class="user-details">
-            <p>Місце проживання<b> {{ user.country }}, {{ user.city }}</b></p>
-            <p>Номер телефону <b>{{ user.phone }}</b></p>
-            <p>День народження <b>{{ user.birthday }}</b></p>
-            <p>Освіта <b>{{ user.education }}</b></p>
-            <p>Стать людини <b>{{ user.gender }}</b></p>
-            <p>Біографія <b>{{ user.bio }}</b></p>
+
+    <!-- Right side of the page -->
+
+    <div class="right-block">
+        <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+        <!-- <p class="online-status">
+            <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
+                alt="img-status">
+            {% if is_online %} Online {% else %} Offline {% endif %}
+        </p> -->
+    
+        <div class="right-side">
+            <div class="user-details">
+                <p>Місце проживання<b> {{ user.country }}, {{ user.city }}</b></p>
+                <p>Номер телефону <b>{{ user.phone }}</b></p>
+                <p>День народження <b>{{ user.birthday }}</b></p>
+                <p>Освіта <b>{{ user.education }}</b></p>
+                <p>Стать людини <b>{{ user.gender }}</b></p>
+                <p>Біографія <b>{{ user.bio }}</b></p>
+            </div>
         </div>
     </div>
 </main>
+
 {% endblock %}

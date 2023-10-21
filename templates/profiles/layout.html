@@ -29,7 +29,7 @@
 
                 </div>
                 <div class="authenticated">
-                    {% if user.is_authenticated %}  
+                    {% if user.is_authenticated %}
                     <ul class="header_li">
                         <li>{{ user.username }}</li>
                         <li><a href="{% url 'account_logout' %}">Вийти</a></li>
@@ -45,6 +45,63 @@
         </nav>
         <hr>
     </header>
+
+    <!-- Left side of the page start -->
+
+    <div class="left-sidebar">
+        <ul>
+            <li>
+                <img src="{% static 'profiles/img/img_category/' %}" alt="">
+                <a href="{% url 'profile:welcome_page' %}">
+                    Головна
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-гость-мужчина-50.png' %}" alt="category_img"> 
+                <a href="{% url 'profile:public_profile' pk=user.pk %}">
+                    Профіль
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-friend-58 (1).png' %}" alt="category_img"> 
+                <a href="{% url 'friends:all_friends' %}">
+                    Друзі
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-сообщение-в-чате-48.png' %}" alt="category_img"> 
+                <a href="{% url 'communications:all_messages' %}">
+                    Повідомлення
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-новости-50 (1).png' %}" alt="category_img"> 
+                <a href="#">
+                    Новини
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-картина-50.png' %}" alt="category_img"> 
+                <a href="#">
+                    Фотографії
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-play-в-круге-50.png' %}" alt="category_img"> 
+                <a href="#">
+                    Відео
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/icons8-apple-music-50.png' %}" alt="category_img"> 
+                <a href="#">
+                    Музика
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Left side of the page end -->
 
     {% block content %}
     {% endblock %}
