@@ -1,17 +1,16 @@
 /* Styles for the main page container */
 .page_container {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
 }
 
 /* Styles for the center part of the page start */
 
-.center_block_page_1 {
+.center_block_page_1 {  
     width: 25%;
     background-color: #ffffff;
-    padding: 10px 10px;
+    padding: 7px 7px;
     display: flex;
     flex-direction: column;
 }
@@ -63,13 +62,14 @@
 
 .right-block {
     flex: 1;
-    margin-left: 15px;
+    margin-left: 10px;
     background-color: #ffffff;
     padding: 10px 10px;
+    max-width: 60%;
 }
 
 .right-block h2 {
-    margin-top: -1px;
+    margin-top: -2px;
 }
 
 .user-details li {
@@ -93,7 +93,7 @@
     display: flex;
     align-items: center;
     margin-left: auto;
-    margin-top: -1px;
+    margin-top: -2px;
 }
 
 .right-block img {
