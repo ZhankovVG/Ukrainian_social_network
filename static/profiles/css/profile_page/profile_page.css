@@ -65,7 +65,7 @@
     flex: 1;
     margin-left: 15px;
     background-color: #ffffff;
-    padding: 10px 10px; 
+    padding: 10px 10px;
 }
 
 .right-block h2 {
@@ -78,6 +78,27 @@
 
 .user-details b {
     margin-left: 80px;
+}
+
+.right-status {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-right: 10px;
+}
+
+.online-status {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-top: -1px;
+}
+
+.right-block img {
+    width: 10px;
+    margin-right: 5px;
 }
 
 /* Styles for the right side of the page end */

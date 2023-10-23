@@ -59,12 +59,14 @@
     <!-- Right side of the page -->
 
     <div class="right-block">
-        <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
-        <!-- <p class="online-status">
-            <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
-                alt="img-status">
-            {% if is_online %} Online {% else %} Offline {% endif %}
-        </p> -->
+        <div class="right-status">
+            <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="online-status">
+                <img src="{% if is_online %}{% static 'profiles/img/on.png' %}{% else %}{% static 'profiles/img/off.png' %}{% endif %}"
+                    alt="img-status">
+                {% if is_online %} Online {% else %} Offline {% endif %}
+            </p>
+        </div>
         <hr>
 
         <div class="right-side">
