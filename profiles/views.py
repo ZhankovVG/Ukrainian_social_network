@@ -1,12 +1,24 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views.generic import View, DetailView
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
-from friends.models import Friend
 from friends.views import FriendsListView
+from django.dispatch import receiver 
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+
+
+@receiver(user_logged_in)
+def got_online(sender, user, request, **kwargs):    
+    user.profile.is_online = True
+    user.profile.save()
+
+@receiver(user_logged_out)
+def got_offline(sender, user, request, **kwargs):   
+    user.profile.is_online = False
+    user.profile.save()
 
 
 class WelcomePageView(View):
@@ -21,6 +33,7 @@ class Mixin():
         context = super().get_context_data(**kwargs)
         context['username'] = self.object.username
         context['friends'] = self.get_friends_list()
+        context['is_online'] = self.object.is_online
         return context
 
 
