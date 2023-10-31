@@ -1,3 +1,10 @@
+.page_container_friend {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
 .user_info2 {
     display: flex;
     align-items: center;
@@ -7,11 +14,24 @@
     padding: 10px;
 }
 
+.user_info2 a {
+    text-decoration: none;
+}
+
 .friends-header {
+    width: 500px;
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    margin-right: 300px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friends-header a {
+    margin-right: 50px;
+    text-decoration: none;
+}
+
+.friends-header h2 {
+    margin-left: 20px;
 }
 
 .my_friends2 a {
@@ -20,8 +40,7 @@
 
 .friendship_requests {
     color: black;
-    
-} 
+}
 
 .friendship_requests:hover {
     color: #4169E1;
