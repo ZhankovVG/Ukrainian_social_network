@@ -30,10 +30,12 @@
                 </div>
                 <div class="authenticated">
                     {% if user.is_authenticated %}
+                    {% if is_own_profile %}
                     <ul class="header_li">
                         <li>{{ user.username }}</li>
                         <li><a href="{% url 'account_logout' %}">Вийти</a></li>
                     </ul>
+                    {% endif %}
                     {% else %}
                     <ul class="header_li">
                         <li><a href="{% url 'account_login' %}" class="logout-link">Вхід</a></li>
@@ -57,49 +59,49 @@
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-гость-мужчина-50.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-гость-мужчина-50.png' %}" alt="category_img">
                 <a href="{% url 'profile:public_profile' pk=request.user.id %}">
                     Профіль
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-friend-58 (1).png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-friend-58 (1).png' %}" alt="category_img">
                 <a href="{% url 'friends:all_friends' %}">
                     Друзі
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-сообщение-в-чате-48.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-сообщение-в-чате-48.png' %}" alt="category_img">
                 <a href="{% url 'communications:all_messages' %}">
                     Повідомлення
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-новости-50 (1).png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-новости-50 (1).png' %}" alt="category_img">
                 <a href="#">
                     Новини
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-картина-50.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-картина-50.png' %}" alt="category_img">
                 <a href="#">
                     Фотографії
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-play-в-круге-50.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-play-в-круге-50.png' %}" alt="category_img">
                 <a href="#">
                     Відео
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-apple-music-50.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-apple-music-50.png' %}" alt="category_img">
                 <a href="#">
                     Музика
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-настройки-50.png' %}" alt="category_img"> 
+                <img src="{% static 'profiles/img/img_category/icons8-настройки-50.png' %}" alt="category_img">
                 <a href="{% url 'profile:edit_profile' %}">
                     Налаштування
                 </a>

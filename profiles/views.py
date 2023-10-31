@@ -24,14 +24,14 @@ def got_offline(sender, user, request, **kwargs):
 class WelcomePageView(View):
     @method_decorator(login_required)
     def get(self, request):
-        context = {'username': request.user.username}
-        return render(request, 'profiles/welcome_page.html', context)
+      
+        return render(request, 'profiles/welcome_page.html')
 
 
 class Mixin():
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['username'] = self.object.username
+        context['is_own_profile'] = self.object.id == self.request.user.id
         context['friends'] = self.get_friends_list()
         context['is_online'] = self.object.is_online
         return context
