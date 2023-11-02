@@ -1,0 +1,10 @@
+.sending_messages {
+    width: 400px;
+    margin-left: 10px;
+}
+
+#chat-container {
+    
+    border: 1px solid black;
+    padding: 7px;
+}
