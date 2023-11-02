@@ -1,0 +1,34 @@
+.all_messages_with_friends {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.block_messages {
+    width: 500px;
+}
+
+.block_messages h2 {
+    margin-left: 20px;
+}
+
+.user_info2 {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.user_info2 a {
+    text-decoration: none;
+}
+
+.user-avatar2 img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
