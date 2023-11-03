@@ -3,10 +3,12 @@
     justify-content: space-between;
     margin: 0 auto;
     max-width: 1200px;
+    padding-top: 20px;
 }
 
 .block_messages {
     width: 500px;
+    background-color: rgb(255, 255, 255);
 }
 
 .block_messages h2 {

@@ -1,0 +1,24 @@
+.edit_profile {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.edit_profile_here {
+    margin-left: 10px;  
+    background-color: rgb(253, 253, 252);
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.edit_profile_form {
+    margin-left: 5px;
+    border: 1px solid silver;
+    padding: 10px;
+}
+
+.edit_profile_form form {
+    margin-left: 10px;
+    margin-bottom: 30px;
+}

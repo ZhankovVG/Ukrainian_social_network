@@ -4,13 +4,17 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<main>
-    <h2>Edit Profile</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">Update Profile</button>
-  </form>
+<main class="edit_profile">
+  <div class="edit_profile_here">
+    <h2>Редагування профілю</h2>
+    <div class="edit_profile_form">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit">Update Profile</button>
+      </form>
+    </div>
+  </div>
 </main>
 {% endblock %}
