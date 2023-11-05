@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'profiles',
     'friends',
     'communications',
+    'news_feed',
+    'ckeditor',
     
     'crispy_forms',
     'crispy_bootstrap4',
@@ -161,6 +163,21 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/" 
+# CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['Link', 'Unlink'],
+            ['NumberedList', 'BulletedList'],
+        ],
+        'height': 300,
+        'width': 800,
+    }
 }
 
 SITE_ID = 1

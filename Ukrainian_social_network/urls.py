@@ -13,6 +13,7 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('friends/', include('friends.urls')),
     path('communications/', include('communications.urls')),
+    path('news_feed/', include('news_feed.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
