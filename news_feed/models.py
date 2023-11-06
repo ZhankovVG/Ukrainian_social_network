@@ -13,6 +13,9 @@ class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.ManyToManyField(Profile, related_name="post_likes", blank=True)
 
+    class Meta:
+        ordering = ['-date_posted']
+
     def __str__(self):
         return self.title
     
