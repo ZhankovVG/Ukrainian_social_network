@@ -1,0 +1,15 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+<main>
+    <div>
+        <h1>All Posts</h1>
+        <ul>
+            {% for post in posts %}
+            <li>{{ post.title }}</li>
+            <p>{{ post.content }}</p>
+           
+            {% endfor %}
+        </ul>
+    </div>
+</main>

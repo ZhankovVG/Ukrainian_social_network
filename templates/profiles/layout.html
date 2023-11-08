@@ -78,7 +78,7 @@
             </li>
             <li>
                 <img src="{% static 'profiles/img/img_category/icons8-новости-50 (1).png' %}" alt="category_img">
-                <a href="#">
+                <a href="{% url 'newsfeed:news' %}">
                     Новини
                 </a>
             </li>
@@ -101,9 +101,15 @@
                 </a>
             </li>
             <li>
-                <img src="{% static 'profiles/img/img_category/icons8-настройки-50.png' %}" alt="category_img">
+                <img src="{% static 'profiles/img/img_category/settings.png' %}" alt="category_img">
                 <a href="{% url 'profile:edit_profile' %}">
                     Налаштування
+                </a>
+            </li>
+            <li>
+                <img src="{% static 'profiles/img/img_category/posts.png' %}" alt="category_img">
+                <a href="{% url 'newsfeed:post_create' %}">
+                    Написати пост
                 </a>
             </li>
         </ul>
