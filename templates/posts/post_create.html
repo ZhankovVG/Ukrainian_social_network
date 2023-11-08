@@ -1,8 +1,13 @@
-{% block content %}
-  <h2>Create a New Post</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Post</button>
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+<main>
+  {% block content %}
+    <h2>Створити нову новину</h2>
+    <form method="post" action="{% url 'newsfeed:post_create' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Создать пост</button>
   </form>
+</main>
 {% endblock %}
