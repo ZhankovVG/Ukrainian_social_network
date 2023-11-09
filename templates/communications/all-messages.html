@@ -10,7 +10,7 @@
                 {% for friend in friends %}
                 <li class="user_info2">
                     <div class="user-avatar2">
-                        <img src="{{ friend.avatar.url }}" alt="avatar_user">
+                        <img src="{{ profile.avatar.url }}" alt="avatar_user">
                         <a href="{% url 'communications:chat_with_friend' friend.id %}">{{ friend.username }}</a>
                     </div>
                 </li>

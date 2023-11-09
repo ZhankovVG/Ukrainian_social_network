@@ -1,0 +1,24 @@
+.all_news {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding-top: 20px;   
+}
+
+.block_news {
+    width: 500px;
+    background-color: rgb(255, 255, 255);
+    padding: 0 10px 10px 20px;
+}
+
+.one_post h3 {
+    margin-top: -5px;
+    padding-top: -10px;
+}
+
+.one_post {
+    border: 1px solid #ccc; 
+    padding: 10px;
+    padding-right: 10px;
+}

@@ -1,15 +1,25 @@
 {% extends "profiles/layout.html" %}
 {% load static %}
 
-<main>
-    <div>
-        <h1>All Posts</h1>
+
+{% block content %}
+<main class="all_news">
+    <div class="block_news">
+        <h1>Всі новини від друзів</h1>
         <ul>
             {% for post in posts %}
-            <li>{{ post.title }}</li>
-            <p>{{ post.content }}</p>
-           
+            <li>
+                <div class="one_post">
+                    <a href="{% url 'profile:public_profile' user.id %}">
+                        <h3>{{ post.author }}</h3>
+                        <h5>{{ post.title }}</h5>
+                    </a>
+                    <p>{{ post.content }}</p>         
+                </div>     
+            </li>
             {% endfor %}
         </ul>
+
     </div>
 </main>
+{% endblock %}
