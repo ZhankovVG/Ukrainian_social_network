@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
+
 class PostCreateView(CreateView):
     model = Post
     form_class = PostCreateForm
