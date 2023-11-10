@@ -14,7 +14,13 @@
                         <h3>{{ post.author }}</h3>
                         <h5>{{ post.title }}</h5>
                     </a>
-                    <p>{{ post.content }}</p>         
+                    <p>{{ post.content }}</p>  
+                    {% if post.author == request.user %}
+                    <form method="post" action="{% url 'newsfeed:delete_post' post.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Видалити</button>
+                    </form>     
+                    {% endif %}  
                 </div>     
             </li>
             {% endfor %}
