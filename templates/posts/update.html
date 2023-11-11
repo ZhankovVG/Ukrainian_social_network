@@ -1,0 +1,16 @@
+{% extends "profiles/layout.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div>
+        <h1>Редагувати пост</h1>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Зберегти зміни">
+        </form>
+        <a href="{% url 'newsfeed:news' %}">Відміна</a>
+    </div>
+</main>
+{% endblock %}
