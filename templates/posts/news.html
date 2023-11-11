@@ -10,7 +10,7 @@
             {% for post in posts %}
             <li>
                 <div class="one_post">
-                    <a href="{% url 'profile:public_profile' user.id %}">
+                    <a href="{% url 'profile:public_profile' post.author.id %}">
                         <h3>{{ post.author }}</h3>
                         <h5>{{ post.title }}</h5>
                     </a>
@@ -19,13 +19,13 @@
                     <form method="post" action="{% url 'newsfeed:delete_post' post.id %}">
                         {% csrf_token %}
                         <button type="submit">Видалити</button>
-                    </form>     
+                    </form>                      
+                    <button><a href="{% url 'newsfeed:update_post' post.id %}">Редагувати</a></button>
                     {% endif %}  
                 </div>     
             </li>
             {% endfor %}
         </ul>
-
     </div>
 </main>
 {% endblock %}

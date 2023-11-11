@@ -1,13 +1,22 @@
+from django.forms.models import BaseModelForm
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from .models import Post
 from .forms import PostCreateForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 
+
+class Mixin():
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.author != self.request.user:
+            raise PermissionError
+        return obj
+    
 
 class PostCreateView(CreateView):
     # Create new post
@@ -41,18 +50,24 @@ class AllPostView(ListView):
     context_object_name = 'posts'
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(Mixin, DeleteView):
     # Delete post
     model = Post
     success_url = reverse_lazy('newsfeed:news')
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if obj.author != self.request.user:
-            raise PermissionError
-        return obj
-    
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.delete()
         return redirect(self.get_success_url())
+
+
+class PostUpdateView(Mixin, UpdateView):
+    # Update post
+    model = Post
+    template_name = 'posts/update.html'
+    success_url = reverse_lazy('newsfeed:news')
+    fields = ['title', 'content',]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
