@@ -22,3 +22,21 @@
     padding: 10px;
     padding-right: 10px;
 }
+
+.one_post button {
+    background-color: yellow;
+    cursor: pointer;
+}
+
+.one_post a {
+    text-decoration: none;
+}
+
+.one_post button:hover {
+    background-color: #2e2ed2;
+    color: aliceblue;
+}
+
+.update_button {
+    margin-left: 10px;
+}
