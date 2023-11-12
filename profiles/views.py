@@ -8,6 +8,7 @@ from django.urls import reverse
 from friends.views import FriendsListView
 from django.dispatch import receiver 
 from django.contrib.auth.signals import user_logged_in, user_logged_out
+from news_feed.models import Post
 
 
 @receiver(user_logged_in)
@@ -35,6 +36,7 @@ class Mixin():
         context['is_own_profile'] = self.object.id == self.request.user.id
         context['friends'] = self.get_friends_list()
         context['is_online'] = self.object.is_online
+        
         return context
 
 
@@ -49,6 +51,12 @@ class PublicProfileView(Mixin, DetailView):
     def get_friends_list(self):
         friends_list = FriendsListView(request=self.request).get_queryset()
         return friends_list
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_posts = Post.objects.filter(author=self.object).order_by('-date_posted')  # Retrieve the user's posts
+        context['user_posts'] = user_posts
+        return context
     
     
 def ProfileEditView(request):
