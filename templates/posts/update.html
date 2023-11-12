@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block content %}
-<main>
-    <div>
+<main class="update_post">
+    <div class="block_post_update">
         <h1>Редагувати пост</h1>
         <form method="post" action="">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Зберегти зміни">
+            <button type="submit">Зберегти зміни</button>
+            <a href="{% url 'newsfeed:news' %}">Відміна</a>
         </form>
-        <a href="{% url 'newsfeed:news' %}">Відміна</a>
     </div>
 </main>
 {% endblock %}

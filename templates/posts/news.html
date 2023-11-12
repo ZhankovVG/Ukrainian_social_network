@@ -19,8 +19,8 @@
                     <form method="post" action="{% url 'newsfeed:delete_post' post.id %}">
                         {% csrf_token %}
                         <button type="submit">Видалити</button>
+                        <a class="update_button" href="{% url 'newsfeed:update_post' post.id %}">Редагувати</a>
                     </form>                      
-                    <button><a href="{% url 'newsfeed:update_post' post.id %}">Редагувати</a></button>
                     {% endif %}  
                 </div>     
             </li>
