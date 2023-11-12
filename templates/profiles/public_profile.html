@@ -18,7 +18,6 @@
                 <img src="{% static 'profiles/img/user-avatar.jpg' %}" alt="avatar_user">
             </div>
             {% endif %}
-            {% endif %}
             <hr>
         </div>
 
@@ -30,8 +29,8 @@
                 {% if friends %}
                 {% for friend in friends %}
                 <li class="user_info_page_1">
-                    {% if friend.avatar %}
                     <a href="{% url 'profile:public_profile' friend.id %}" style="text-decoration: none;">
+                        {% if friend.avatar %}
                         <div class="user_avatar_page_1">
                             <img src="{{ friend.avatar.url }}" alt="avatar_user">
                         </div>
@@ -43,16 +42,16 @@
 
                         <div class="user_details2">
                             <p>{{ friend.first_name }}</p>
+                        </div>
                     </a>
+                </li>
+                {% endfor %}
+                {% else %}
+                <p>У вас поки що немає друзів.</p>
+                {% endif %}
+            </ul>
         </div>
-        </li>
-        {% endfor %}
-        {% else %}
-        <p>У вас поки що немає друзів.</p>
         {% endif %}
-        </ul>
-    </div>
-
     </div>
 
     <!-- Center part of the page end -->
@@ -83,7 +82,27 @@
                 </ul>
             </div>
         </div>
+        <hr>
+
+        <!-- Post output block -->
+
+        <div class="post_output_profile_block">
+            {% for post in user_posts %}
+            <div class="block_inform_post">
+                <div class="author_info">
+                    <img src="{{ post.author.avatar.url }}" alt="avatar_user">
+                    <div class="author_name">
+                        <h3>{{ post.author.username }} {{ post.author.last_name }}</h3>
+                    </div>
+                </div>
+                <h4 class="post_title">{{ post.title }}</h4>
+                <p class="post_content">{{ post.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <hr>
     </div>
+
 </main>
 
 {% endblock %}

@@ -11,6 +11,7 @@
             <li>
                 <div class="one_post">
                     <a href="{% url 'profile:public_profile' post.author.id %}">
+                        <img src="{{ post.author.avatar.url }}" alt="avatar-user">
                         <h3>{{ post.author }}</h3>
                         <h5>{{ post.title }}</h5>
                     </a>
