@@ -13,7 +13,7 @@
                     <a href="{% url 'profile:public_profile' post.author.id %}">
                         <img src="{{ post.author.avatar.url }}" alt="avatar-user">
                         <h3>{{ post.author }}</h3>
-                        <h5>{{ post.title }}</h5>
+                        <h4 class="underline_title">{{ post.title }}</h4>
                     </a>
                     <p>{{ post.content }}</p>  
                     {% if post.author == request.user %}
