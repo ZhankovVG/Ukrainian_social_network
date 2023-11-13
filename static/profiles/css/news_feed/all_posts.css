@@ -40,3 +40,38 @@
 .update_button {
     margin-left: 10px;
 }
+
+.one_post img {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
+
+.underline_title {
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+}
+
+.one_post p {
+    font-size: 16px;
+    border: 1px solid silver;
+    padding: 6px;
+}
+
+.add_post {
+    float: right;
+}
+
+.add_post a {
+    text-decoration: none;
+    color: black;
+    border: 1px solid silver;
+    margin: 5px;
+    padding: 3px;
+}
+
+.add_post a:hover{
+    background-color: #2e2ed2;
+    color: aliceblue;
+}
