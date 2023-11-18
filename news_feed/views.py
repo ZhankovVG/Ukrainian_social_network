@@ -1,13 +1,12 @@
-from django.forms.models import BaseModelForm
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, View
 from .models import Post
 from .forms import PostCreateForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 
 class Mixin():
@@ -71,3 +70,15 @@ class PostUpdateView(Mixin, UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+
+@method_decorator(login_required, name='post')
+class LikePostView(View):
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+
+        if request.user not in post.likes.all():
+            post.likes.add(request.user)
+        
+        return JsonResponse({'likes': post.total_likes()})

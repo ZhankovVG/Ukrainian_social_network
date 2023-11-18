@@ -143,4 +143,17 @@
     padding: 6px;
 }
 
+.button_post_profile button {
+    background-color: yellow;
+    cursor: pointer;
+}
+
+.button_post_profile button:hover {
+    background-color: #0000ff;
+    color: aliceblue;
+}
+
+.button_post_profile form a {
+    text-decoration: none;
+}
 /* Post output end */

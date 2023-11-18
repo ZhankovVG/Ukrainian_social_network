@@ -88,7 +88,7 @@
 
         <div class="post_output_profile_block">
             <div class="add_post">
-                    <a href="{% url 'newsfeed:post_create' %}">Додати пост</a>       
+                <a href="{% url 'newsfeed:post_create' %}">Додати пост</a>
             </div>
             {% for post in user_posts %}
             <div class="block_inform_post">
@@ -100,7 +100,10 @@
                 </div>
                 <h4 class="post_title">{{ post.title }}</h4>
                 <p class="post_content">{{ post.content }}</p>
-                <div>
+
+                
+
+                <div class="button_post_profile">
                     {% if post.author == request.user %}
                     <form method="post" action="{% url 'newsfeed:delete_post' post.id %}">
                         {% csrf_token %}
@@ -114,6 +117,8 @@
         </div>
         <hr>
     </div>
+
+
 
 </main>
 
