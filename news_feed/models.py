@@ -22,6 +22,12 @@ class Post(models.Model):
     def total_likes(self):
         return self.likes.count()
     
+    def like(self, user):
+        if user not in self.likes.all():
+            self.likes.add(user)
+        else:
+            self.likes.remove(user)
+    
     # def get_absolute_url(self):
     #     return reverse('post_create', kwargs={'pk':self.pk})
     
