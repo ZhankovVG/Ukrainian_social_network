@@ -101,7 +101,9 @@
                 <h4 class="post_title">{{ post.title }}</h4>
                 <p class="post_content">{{ post.content }}</p>
 
-                
+                <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
+                <img class="like-button" data-post-id="{{ post.id }}" src="{% static 'profiles/img/like.png' %}"
+                    alt="like">
 
                 <div class="button_post_profile">
                     {% if post.author == request.user %}
@@ -118,6 +120,32 @@
         <hr>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".like-button").on("click", function () {
+                var post_id = $(this).data("post-id");
+                var like_button = $(this);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'newsfeed:like_post' %}",
+                    data: {
+                        'post_id': post_id,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if ('likes' in data) {
+                            $("#likes_count_" + post_id).text(data.likes);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+            });
+        });
+    </script>
 
 
 </main>

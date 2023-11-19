@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 
 class Mixin():
@@ -28,14 +29,6 @@ class PostCreateView(CreateView):
         if self.request.user.is_authenticated:
             form.instance.user = self.request.user
         return super(PostCreateView, self).form_valid(form)
-
-    def post(self, *args, **kwargs):
-        form = self.get_form()
-        self.object = None
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
         
     def get_success_url(self):
         user_id = self.request.user.id 
@@ -72,13 +65,20 @@ class PostUpdateView(Mixin, UpdateView):
         return super().form_valid(form)
     
 
-@method_decorator(login_required, name='post')
 class LikePostView(View):
+    # Likes on posts
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
-        post = Post.objects.get(id=post_id)
+        post = get_object_or_404(Post, id=post_id)
 
-        if request.user not in post.likes.all():
-            post.likes.add(request.user)
-        
-        return JsonResponse({'likes': post.total_likes()})
+        if request.user.is_authenticated:
+            if request.user not in post.likes.all():
+                post.likes.add(request.user)
+            else:
+                post.likes.remove(request.user)
+
+            likes_count = post.total_likes()
+            return JsonResponse({'likes': likes_count})
+        else:
+            return JsonResponse({'error': 'User not authenticated'}, status=400)
