@@ -54,8 +54,13 @@ class PublicProfileView(Mixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_posts = Post.objects.filter(author=self.object).order_by('-date_posted')  # Retrieve the user's posts
+        
+        user_posts = Post.objects.filter(author=self.object).order_by('-date_posted') 
         context['user_posts'] = user_posts
+
+        for post in context['user_posts']:
+            post.likes_count = post.total_likes()
+
         return context
     
     
