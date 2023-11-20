@@ -98,12 +98,15 @@
                         <h3>{{ post.author.username }} {{ post.author.last_name }}</h3>
                     </div>
                 </div>
-                <h4 class="post_title">{{ post.title }}</h4>
-                <p class="post_content">{{ post.content }}</p>
-
-                <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
-                <img class="like-button" data-post-id="{{ post.id }}" src="{% static 'profiles/img/like.png' %}"
-                    alt="like">
+                <div class="post">
+                    <h4 class="post_title">{{ post.title }}</h4>
+                    <p class="post_content">{{ post.content }}</p>
+    
+                    <img class="like-button" data-post-id="{{ post.id }}" src="{% static 'profiles/img/like.png' %}"
+                        alt="like">
+                    <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
+                    <p>Відповісти</p>
+                </div>
 
                 <div class="button_post_profile">
                     {% if post.author == request.user %}
