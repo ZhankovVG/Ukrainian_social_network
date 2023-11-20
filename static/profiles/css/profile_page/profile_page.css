@@ -157,3 +157,16 @@
     text-decoration: none;
 }
 /* Post output end */
+
+
+/* likes post start */
+
+.post img {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+}
+
+
+
+/* likes post end */
