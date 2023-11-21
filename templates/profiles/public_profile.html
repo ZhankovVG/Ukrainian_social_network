@@ -106,6 +106,13 @@
                         alt="like">
                     <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
                     <p>Відповісти</p>
+
+                    <form method="post" action="{% url 'newsfeed:create_comments' pk=post.pk %}">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <button type="submit">sd</button>
+                    </form>
+
                 </div>
 
                 <div class="button_post_profile">
