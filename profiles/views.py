@@ -9,6 +9,7 @@ from friends.views import FriendsListView
 from django.dispatch import receiver 
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from news_feed.models import Post
+from news_feed.forms import CommentsCreateForm
 
 
 @receiver(user_logged_in)
@@ -60,6 +61,8 @@ class PublicProfileView(Mixin, DetailView):
 
         for post in context['user_posts']:
             post.likes_count = post.total_likes()
+
+        context['comment_form'] = CommentsCreateForm()
 
         return context
     

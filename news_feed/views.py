@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, View
 from .models import Post
-from .forms import PostCreateForm
+from .forms import PostCreateForm, CommentsCreateForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -82,3 +82,21 @@ class LikePostView(View):
             return JsonResponse({'likes': likes_count})
         else:
             return JsonResponse({'error': 'User not authenticated'}, status=400)
+
+
+class CommentsCreateView(View):
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwakgs):
+        post_id = request.POST.get('post_id')
+        post = get_object_or_404(Post, id=post_id)
+        form = CommentsCreateForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user.profile
+            comment.save()
+
+            return JsonResponse({'succes': 'Comment added successfully'})
+        else:
+            return JsonResponse({'error': 'Invalid form submission'}, status=400)

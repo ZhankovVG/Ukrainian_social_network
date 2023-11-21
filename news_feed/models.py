@@ -45,4 +45,4 @@ class Comments(models.Model):
         return self.likes.count()
     
     def __str__(self):
-        return '%s - %s - %s' %(self.post.title, self.name, self.id)
+        return f'{self.post.title} - {self.author.user.name} - {self.id}'
