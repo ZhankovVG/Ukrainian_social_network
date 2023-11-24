@@ -167,6 +167,29 @@
     cursor: pointer;
 }
 
-
-
 /* likes post end */
+
+/* Comments on posts start */
+
+.form-comments {
+    width: 300px;
+    
+}
+
+.form-comments form textarea {
+    width: 200px;
+    margin-left: 40px;
+    
+}
+
+.comment {
+    width: 250px;
+    background-color: #dbdbdb;
+    margin-left: 40px;
+}
+
+.comment-p {
+    margin: 7px;
+}
+
+/* Comments on posts end */

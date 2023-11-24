@@ -99,15 +99,15 @@
                     </div>
                 </div>
                 <div class="post">
-                    <h4 class="post_title">{{ post.title }}</h4>
-                    <p class="post_content">{{ post.content }}</p>
-
-                    <img class="like-button" data-post-id="{{ post.id }}" src="{% static 'profiles/img/like.png' %}"
-                        alt="like">
-                    <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
-                    <p>Відповісти</p>
-
                     <div class="button_post_profile">
+                        <h4 class="post_title">{{ post.title }}</h4>
+                        <p class="post_content">{{ post.content }}</p>
+
+                        <img class="like-button" data-post-id="{{ post.id }}" src="{% static 'profiles/img/like.png' %}"
+                            alt="like">
+                        <p>Likes: <span id="likes_count_{{ post.id }}">{{ post.total_likes }}</span></p>
+                        <p>Відповісти</p>
+
                         {% if post.author == request.user %}
                         <form method="post" action="{% url 'newsfeed:delete_post' post.id %}">
                             {% csrf_token %}
@@ -117,26 +117,30 @@
                         {% endif %}
                     </div>
 
-                    <form method="post" action="{% url 'newsfeed:create_comments' pk=post.pk %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="post_id" value="{{ post.id }}">
-                        {{ comment_form.as_p }}
-                        <button type="submit">Відправити</button>
-                    </form>
-                    
-                    
                     {% for comment in post.comments.all %}
                     <div class="comment">
-                        <p>Name: {{ comment.name }}</p>
-                        <p>{{ comment.content }}</p>
-                        <p>Likes: {{ comment.total_likes }}</p>
+                        <div class="comment-p">
+                            <p>Name: {{ comment.name }}</p>
+                            <p>{{ comment.content }}</p>
+                            <p>Likes: {{ comment.total_likes }}</p>
+                        </div>
                     </div>
                     <hr>
                     {% endfor %}
 
+                    <div class="form-comments">
+                        <form method="post" action="{% url 'newsfeed:create_comments' pk=post.pk %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                            <p>{{ comment_form.as_p }}</p>
+                            <button type="submit">Відправити</button>
+                        </form>
+                    </div>
+
+
                 </div>
 
-                
+
             </div>
             {% endfor %}
         </div>
